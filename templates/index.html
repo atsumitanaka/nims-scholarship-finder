@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIMS 奨学金・制度検索 | Scholarship Finder</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header>
+            <h1>NIMS 奨学金・制度検索</h1>
+            <p class="subtitle">Scholarship & Program Finder</p>
+        </header>
+
+        <!-- 検索フォーム -->
+        <section class="search-section">
+            <h2>条件を選択してください / Select Your Criteria</h2>
+
+            <div class="filter-group">
+                <!-- 国籍 -->
+                <div class="filter-item">
+                    <label for="nationality">国籍 / Nationality</label>
+                    <select id="nationality">
+                        <option value="">-- 選択してください --</option>
+                        <option value="japanese">日本人 / Japanese</option>
+                        <option value="foreign">外国人 / Non-Japanese</option>
+                    </select>
+                </div>
+
+                <!-- 最終学歴 -->
+                <div class="filter-item">
+                    <label for="current_education">最終学歴 / Current Education</label>
+                    <select id="current_education">
+                        <option value="">-- 選択してください --</option>
+                        <option value="bachelor">学部（卒業/在学中）/ Bachelor's</option>
+                        <option value="master">修士（修了/在学中）/ Master's</option>
+                        <option value="doctor">博士（修了/在学中）/ Doctoral</option>
+                    </select>
+                </div>
+
+                <!-- 希望進路 -->
+                <div class="filter-item">
+                    <label for="desired_path">希望進路 / Desired Path</label>
+                    <select id="desired_path">
+                        <option value="">-- 選択してください --</option>
+                        <option value="master">修士課程進学 / Master's Program</option>
+                        <option value="doctor">博士課程進学 / Doctoral Program</option>
+                        <option value="postdoc">ポスドク / Postdoc</option>
+                        <option value="intern">インターンシップ / Internship</option>
+                    </select>
+                </div>
+
+                <!-- 入学・採用希望時期 -->
+                <div class="filter-item">
+                    <label for="intake_month">入学・採用時期 / Intake Period</label>
+                    <select id="intake_month">
+                        <option value="">-- 選択してください --</option>
+                        <optgroup label="2025年度 / FY2025">
+                            <option value="2025-04">2025年4月 / April 2025</option>
+                            <option value="2025-10">2025年10月 / October 2025</option>
+                            <option value="2025-first">2025年度前期（4-9月）/ FY2025 1st</option>
+                            <option value="2025-second">2025年度後期（10-3月）/ FY2025 2nd</option>
+                        </optgroup>
+                        <optgroup label="2026年度 / FY2026">
+                            <option value="2026-04">2026年4月 / April 2026</option>
+                            <option value="2026-10">2026年10月 / October 2026</option>
+                            <option value="2026-first">2026年度前期（4-9月）/ FY2026 1st</option>
+                            <option value="2026-second">2026年度後期（10-3月）/ FY2026 2nd</option>
+                        </optgroup>
+                        <optgroup label="2027年度 / FY2027">
+                            <option value="2027-04">2027年4月 / April 2027</option>
+                            <option value="2027-10">2027年10月 / October 2027</option>
+                            <option value="2027-first">2027年度前期（4-9月）/ FY2027 1st</option>
+                            <option value="2027-second">2027年度後期（10-3月）/ FY2027 2nd</option>
+                        </optgroup>
+                    </select>
+                </div>
+
+                <!-- 筑波大学受験 -->
+                <div class="filter-item">
+                    <label for="tsukuba">筑波大NIMS連携大学院 / Tsukuba-NIMS</label>
+                    <select id="tsukuba">
+                        <option value="">-- 受験予定なし --</option>
+                        <option value="master">修士課程受験予定 / Master's</option>
+                        <option value="doctor">博士課程受験予定 / Doctoral</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-buttons">
+                <button id="search-btn" class="btn-primary">検索 / Search</button>
+                <button id="reset-btn" class="btn-secondary">リセット / Reset</button>
+            </div>
+        </section>
+
+        <!-- メインコンテンツ（検索結果 + タイムライン） -->
+        <div class="main-content">
+            <!-- 検索結果（左側） -->
+            <section class="results-section">
+                <h2>検索結果 / Results <span id="result-count"></span></h2>
+                <p class="sort-info">※ 締切日が近い順に表示 / チェックを入れるとスケジュールを比較できます</p>
+                <div id="results-container">
+                    <p class="no-results">条件を選択して検索してください。<br>Please select criteria and search.</p>
+                </div>
+            </section>
+
+            <!-- 統合タイムライン（右側） -->
+            <aside class="timeline-section" id="timeline-section" style="display: none;">
+                <div class="timeline-header">
+                    <h2>📅 スケジュール比較</h2>
+                    <button id="clear-selection-btn" class="btn-secondary btn-small">選択解除</button>
+                </div>
+                <div id="timeline-container"></div>
+            </aside>
+        </div>
+
+        <!-- フッター -->
+        <footer>
+            <p>最終更新: <span id="last-updated">-</span></p>
+            <p class="disclaimer">
+                ※ 最新情報は必ず各機関の公式サイトでご確認ください。<br>
+                Please verify the latest information on official websites.
+            </p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
