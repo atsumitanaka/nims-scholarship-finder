@@ -493,7 +493,7 @@
           "deadline": "2025年7月上旬",
           "document_deadline": "2025年7月中旬必着",
           "exam_date": "2025年8月下旬",
-          "result": "2025年9月中旬",
+          "result": "2025年9月11日〜9月17日",
           "enrollment_procedure": "2025年10月〜11月",
           "note": "博士前期・後期課程、数理物質科学研究群"
         },
@@ -504,7 +504,7 @@
           "deadline": "2026年1月上旬",
           "document_deadline": "2026年1月中旬必着",
           "exam_date": "2026年2月上旬",
-          "result": "2026年2月中旬",
+          "result": "2026年2月13日〜2月19日",
           "enrollment_procedure": "2026年2月〜3月",
           "note": "博士前期・後期課程、第2次募集"
         },
@@ -622,5 +622,5 @@
       ]
     }
   ],
-  "last_updated": "2025-01-20"
+  "last_updated": "2025-01-22"
 }
