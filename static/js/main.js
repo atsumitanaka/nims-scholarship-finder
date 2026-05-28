@@ -22,6 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedPrograms = new Map();
     let allPrograms = [];
 
+    // 元データ（アクセスごとに再取得）
+    const DATA_URL = 'data/scholarships.json';
+    const FAR_FUTURE = new Date(9999, 11, 31);
+    let rawData = null;
+
     // イベントリスナー
     searchBtn.addEventListener('click', searchPrograms);
     resetBtn.addEventListener('click', resetForm);
@@ -36,36 +41,139 @@ document.addEventListener('DOMContentLoaded', function() {
     searchPrograms();
 
     /**
+     * scholarships.json を毎回キャッシュ無効で取得
+     */
+    async function loadScholarships() {
+        const url = `${DATA_URL}?v=${Date.now()}`;
+        const response = await fetch(url, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error(`Failed to load data: ${response.status}`);
+        }
+        return response.json();
+    }
+
+    /**
+     * 締切日文字列をパース
+     */
+    function parseDeadline(deadlineStr) {
+        if (!deadlineStr) return FAR_FUTURE;
+        if (deadlineStr.includes('随時')) return FAR_FUTURE;
+
+        const patterns = [
+            /(\d{4})年(\d{1,2})月(\d{1,2})日/,
+            /(\d{4})年(\d{1,2})月/,
+            /(\d{4})\/(\d{1,2})\/(\d{1,2})/
+        ];
+
+        for (const pattern of patterns) {
+            const m = deadlineStr.match(pattern);
+            if (m) {
+                const year = parseInt(m[1]);
+                const month = parseInt(m[2]) - 1;
+                const day = m[3] ? parseInt(m[3]) : 1;
+                return new Date(year, month, day);
+            }
+        }
+        return FAR_FUTURE;
+    }
+
+    /**
+     * 締切が過ぎているか
+     */
+    function isDeadlinePassed(deadlineStr) {
+        if (!deadlineStr) return false;
+        if (deadlineStr.includes('随時')) return false;
+        const d = parseDeadline(deadlineStr);
+        if (d.getTime() === FAR_FUTURE.getTime()) return false;
+        return d < new Date();
+    }
+
+    /**
+     * 締切超過のスケジュールを除外
+     */
+    function filterExpiredSchedules(schedules) {
+        return (schedules || []).filter(s => !isDeadlinePassed(s.deadline || ''));
+    }
+
+    /**
+     * プログラムの最も近い締切日を取得（ソート用）
+     */
+    function getNearestDeadline(program) {
+        const schedules = program.application_schedule || [];
+        if (schedules.length === 0) return FAR_FUTURE;
+        let nearest = FAR_FUTURE;
+        for (const s of schedules) {
+            const d = parseDeadline(s.deadline || '');
+            if (d < nearest) nearest = d;
+        }
+        return nearest;
+    }
+
+    /**
+     * プログラム一覧を条件でフィルタ（旧サーバー側 filter_programs の移植）
+     */
+    function filterPrograms(programs, filters) {
+        const { nationality, current_education, desired_path, intake_month, tsukuba } = filters;
+        const results = [];
+
+        for (const original of programs) {
+            const activeSchedules = filterExpiredSchedules(original.application_schedule);
+            if (activeSchedules.length === 0) continue;
+
+            const program = { ...original, application_schedule: activeSchedules };
+
+            if (nationality && !(program.target_nationality || []).includes(nationality)) continue;
+            if (current_education && !(program.current_education || []).includes(current_education)) continue;
+            if (desired_path && !(program.desired_path || []).includes(desired_path)) continue;
+
+            if (intake_month) {
+                const hasMatch = activeSchedules.some(s => {
+                    const intake = s.intake || '';
+                    const adoptionPeriod = s.adoption_period || '';
+                    const adoptionDate = s.adoption_date || '';
+                    return intake.includes(intake_month) ||
+                        matchesIntakeFilter(intake, intake_month) ||
+                        matchesIntakeFilter(adoptionPeriod, intake_month) ||
+                        matchesIntakeFilter(adoptionDate, intake_month);
+                });
+                if (!hasMatch) continue;
+            }
+
+            if (tsukuba) {
+                if (!program.tsukuba_related) continue;
+                if (!(program.tsukuba_degree || []).includes(tsukuba)) continue;
+            }
+
+            results.push(program);
+        }
+
+        results.sort((a, b) => getNearestDeadline(a) - getNearestDeadline(b));
+        return results;
+    }
+
+    /**
      * プログラム検索
      */
     async function searchPrograms() {
-        const nationality = nationalitySelect.value;
-        const currentEducation = currentEducationSelect.value;
-        const desiredPath = desiredPathSelect.value;
-        const intakeMonth = intakeMonthSelect.value;
-        const tsukuba = tsukubaSelect.value;
-
-        // APIリクエスト
-        const params = new URLSearchParams();
-        if (nationality) params.append('nationality', nationality);
-        if (currentEducation) params.append('current_education', currentEducation);
-        if (desiredPath) params.append('desired_path', desiredPath);
-        if (intakeMonth) params.append('intake_month', intakeMonth);
-        if (tsukuba) params.append('tsukuba', tsukuba);
+        const filters = {
+            nationality: nationalitySelect.value,
+            current_education: currentEducationSelect.value,
+            desired_path: desiredPathSelect.value,
+            intake_month: intakeMonthSelect.value,
+            tsukuba: tsukubaSelect.value
+        };
 
         try {
-            const response = await fetch(`/api/programs?${params.toString()}`);
-            const data = await response.json();
+            // アクセスごとに最新の JSON を取得
+            rawData = await loadScholarships();
 
-            // プログラムを保持
-            allPrograms = data.programs;
+            const programs = filterPrograms(rawData.programs || [], filters);
+            allPrograms = programs;
 
-            // 結果を表示
-            displayResults(data.programs);
-            resultCount.textContent = `(${data.count}件)`;
-            lastUpdated.textContent = data.last_updated || '-';
+            displayResults(programs);
+            resultCount.textContent = `(${programs.length}件)`;
+            lastUpdated.textContent = rawData.last_updated || '-';
 
-            // 選択状態を復元
             restoreSelections();
 
         } catch (error) {
