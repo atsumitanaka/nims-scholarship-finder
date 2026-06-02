@@ -1,0 +1,40 @@
+name: Update Scholarship Schedules
+
+on:
+  schedule:
+    # 毎日 18:00 UTC = 03:00 JST 翌日
+    - cron: '0 18 * * *'
+  workflow_dispatch:  # 手動実行も可能
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Run scraper
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/update_schedules.py
+
+      - name: Commit changes
+        run: |
+          if [ -n "$(git status --porcelain data/scholarships.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/scholarships.json
+            git commit -m "🤖 Auto-update scholarship schedules ($(date -u +%Y-%m-%d))"
+            git push
+          else
+            echo "No changes to commit"
+          fi
