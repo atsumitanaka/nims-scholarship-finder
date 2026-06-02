@@ -27,10 +27,19 @@ MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-4-7")
 MAX_TEXT_CHARS = 50_000
 REQUEST_TIMEOUT = 30
 SLEEP_BETWEEN_CALLS = 1.0
-USER_AGENT = (
-    "nims-scholarship-finder/1.0 "
-    "(+https://github.com/atsumitanaka/nims-scholarship-finder)"
-)
+# JSPS など一部のサイトは generic UA を 403 で弾くため、Chrome 風 UA を使用
+HTTP_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36"
+    ),
+    "Accept": (
+        "text/html,application/xhtml+xml,application/xml;q=0.9,"
+        "image/avif,image/webp,*/*;q=0.8"
+    ),
+    "Accept-Language": "ja,en;q=0.9",
+}
 
 SCHEDULE_FIELDS = [
     ("intake", "入学・採用時期（例: '2027年4月入学'、'2026年度 第1次公募'）"),
@@ -84,9 +93,7 @@ SCHEDULE_SCHEMA = {
 def fetch_page_text(url: str) -> str | None:
     """URL から HTML を取得し、ノイズを除いたテキストに整形して返す。"""
     try:
-        resp = requests.get(
-            url, timeout=REQUEST_TIMEOUT, headers={"User-Agent": USER_AGENT}
-        )
+        resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers=HTTP_HEADERS)
         resp.raise_for_status()
     except requests.RequestException as e:
         print(f"  ⚠️ fetch failed: {e}", file=sys.stderr)
@@ -228,4 +235,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    # GitHub Actions のログを時系列で見るためバッファリング無効化
+    sys.stdout.reconfigure(line_buffering=True)
+    sys.stderr.reconfigure(line_buffering=True)
     sys.exit(main())
