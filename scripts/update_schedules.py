@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 """
-scholarships.json の各 URL を取得し、Claude API で最新のスケジュール情報を抽出する。
-GitHub Actions から毎日実行され、変更があれば自動コミット・プッシュする。
+scholarships.json の各 URL を取得し、Gemini API で最新の制度情報を抽出する。
+HTML 本文に加え、ページ内の PDF も Gemini にマルチモーダル入力として渡す。
+GitHub Actions から日次および手動実行され、変更があれば自動コミット・プッシュする。
+
+抽出対象:
+  - application_schedule (各種日付・期間)
+  - benefits           (支援金額・支援内容)
+  - required_documents (必要書類リスト)
 
 環境変数:
-    ANTHROPIC_API_KEY  必須
-    CLAUDE_MODEL       任意（既定: claude-opus-4-7）
+    GEMINI_API_KEY  必須
+    GEMINI_MODEL    任意（既定: gemini-2.0-flash）
 """
 from __future__ import annotations
 
@@ -15,19 +21,22 @@ import sys
 import time
 from datetime import datetime
 from pathlib import Path
+from urllib.parse import urljoin, urlparse
 
-import anthropic
 import requests
 from bs4 import BeautifulSoup
+from google import genai
+from google.genai import types
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_FILE = ROOT / "data" / "scholarships.json"
 
-MODEL = os.getenv("CLAUDE_MODEL", "claude-opus-4-7")
-MAX_TEXT_CHARS = 50_000
+MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+MAX_HTML_CHARS = 80_000
+MAX_PDFS_PER_PROGRAM = 3
+MAX_PDF_BYTES = 4 * 1024 * 1024  # 4MB（Gemini inline 上限の目安）
 REQUEST_TIMEOUT = 30
 SLEEP_BETWEEN_CALLS = 1.0
-# JSPS など一部のサイトは generic UA を 403 で弾くため、Chrome 風 UA を使用
 HTTP_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -64,16 +73,15 @@ SCHEDULE_FIELDS = [
     ("note", "備考（条件・対象プログラム等）"),
 ]
 
-SCHEDULE_SCHEMA = {
+# Gemini structured output 用 schema（OpenAPI 3.0 サブセット）
+PROGRAM_SCHEMA = {
     "type": "object",
-    "additionalProperties": False,
     "properties": {
         "schedules": {
             "type": "array",
-            "description": "公式ページに記載されている、現在募集中または今後募集予定のスケジュール",
+            "description": "公式ページ／PDF に記載されている、現在募集中または今後募集予定のスケジュール",
             "items": {
                 "type": "object",
-                "additionalProperties": False,
                 "properties": {
                     name: {"type": "string", "description": desc}
                     for name, desc in SCHEDULE_FIELDS
@@ -81,17 +89,37 @@ SCHEDULE_SCHEMA = {
                 "required": ["intake"],
             },
         },
+        "benefits": {
+            "type": "array",
+            "description": (
+                "支援内容（給付額・期間・支援内容）。原文表記を保ったまま、"
+                "label と value のペアで返す。例: label='月額', value='20万円'"
+            ),
+            "items": {
+                "type": "object",
+                "properties": {
+                    "label": {"type": "string"},
+                    "value": {"type": "string"},
+                },
+                "required": ["label", "value"],
+            },
+        },
+        "required_documents": {
+            "type": "array",
+            "description": "応募に必要な書類のリスト。原文の表現を保つ",
+            "items": {"type": "string"},
+        },
         "extraction_notes": {
             "type": "string",
-            "description": "抽出時の補足コメント（PDFへの誘導しか無い場合・該当無し等）",
+            "description": "抽出時の補足コメント（情報が PDF にしかない・該当なし等）",
         },
     },
     "required": ["schedules", "extraction_notes"],
 }
 
 
-def fetch_page_text(url: str) -> str | None:
-    """URL から HTML を取得し、ノイズを除いたテキストに整形して返す。"""
+def fetch_html(url: str) -> tuple[str, BeautifulSoup] | None:
+    """URL から HTML を取得し、(整形済みテキスト, BeautifulSoup) を返す。"""
     try:
         resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers=HTTP_HEADERS)
         resp.raise_for_status()
@@ -99,118 +127,229 @@ def fetch_page_text(url: str) -> str | None:
         print(f"  ⚠️ fetch failed: {e}", file=sys.stderr)
         return None
 
-    soup = BeautifulSoup(resp.text, "html.parser")
-    for tag in soup(["script", "style", "noscript", "iframe", "svg"]):
+    soup_for_text = BeautifulSoup(resp.text, "html.parser")
+    for tag in soup_for_text(["script", "style", "noscript", "iframe", "svg"]):
         tag.decompose()
-    text = soup.get_text(separator="\n", strip=True)
+    text = soup_for_text.get_text(separator="\n", strip=True)
     lines = [line for line in (line.strip() for line in text.splitlines()) if line]
     text = "\n".join(lines)
-    if len(text) > MAX_TEXT_CHARS:
-        text = text[:MAX_TEXT_CHARS] + "\n...[truncated]"
-    return text
+    if len(text) > MAX_HTML_CHARS:
+        text = text[:MAX_HTML_CHARS] + "\n...[truncated]"
+
+    # PDF リンク抽出用は元の HTML を残した soup を使う
+    soup_for_links = BeautifulSoup(resp.text, "html.parser")
+    return text, soup_for_links
 
 
-def extract_schedules(
-    client: anthropic.Anthropic, program: dict, page_text: str, today: str
+def collect_pdf_links(soup: BeautifulSoup, base_url: str) -> list[str]:
+    """ページ内の同一ホストの PDF リンクを抽出し、絶対 URL で返す。"""
+    base_host = urlparse(base_url).netloc
+    pdfs: list[str] = []
+    seen: set[str] = set()
+
+    for a in soup.find_all("a", href=True):
+        href = a["href"].strip()
+        absolute = urljoin(base_url, href)
+        parsed = urlparse(absolute)
+        if parsed.scheme not in ("http", "https"):
+            continue
+        # 同一ホストのみ（外部の無関係 PDF は拾わない）
+        if parsed.netloc != base_host:
+            continue
+        path_lower = parsed.path.lower()
+        if not path_lower.endswith(".pdf"):
+            continue
+        if absolute in seen:
+            continue
+        seen.add(absolute)
+        pdfs.append(absolute)
+        if len(pdfs) >= MAX_PDFS_PER_PROGRAM:
+            break
+
+    return pdfs
+
+
+def fetch_pdf_bytes(url: str) -> bytes | None:
+    """PDF をバイト列で取得。サイズ超過は None。"""
+    try:
+        resp = requests.get(url, timeout=REQUEST_TIMEOUT, headers=HTTP_HEADERS)
+        resp.raise_for_status()
+    except requests.RequestException as e:
+        print(f"    ⚠️ pdf fetch failed: {url} ({e})", file=sys.stderr)
+        return None
+
+    content = resp.content
+    if len(content) > MAX_PDF_BYTES:
+        print(
+            f"    ⚠️ pdf too large ({len(content) / 1024 / 1024:.1f}MB): {url}",
+            file=sys.stderr,
+        )
+        return None
+    return content
+
+
+def extract_program_data(
+    client: genai.Client,
+    program: dict,
+    html_text: str,
+    pdfs: list[tuple[str, bytes]],
+    today: str,
 ) -> dict | None:
-    """Claude を使ってページから schedule を抽出する。"""
-    existing = json.dumps(
+    """Gemini でページ + PDF から制度情報を抽出する。"""
+    existing_schedule = json.dumps(
         program.get("application_schedule", []), ensure_ascii=False, indent=2
     )
+    existing_benefits = json.dumps(
+        program.get("benefits", {}), ensure_ascii=False, indent=2
+    )
+    existing_docs = json.dumps(
+        program.get("required_documents", []), ensure_ascii=False, indent=2
+    )
 
-    system = (
+    system_instruction = (
         "あなたは日本の奨学金・大学院・研究員制度の公式募集ページから"
-        "「現在募集中、または今後募集予定のスケジュール情報」を抽出する専門家です。"
-        "以下を厳守してください:\n"
+        "最新の制度情報を抽出する専門家です。以下を厳守してください:\n"
         f"1. 今日の日付は {today}。これより前に締切が過ぎたスケジュールは含めない\n"
-        "2. ページに明示的に記載されている日付・期間のみを抽出する（推測・補完しない）\n"
-        "3. PDF / 別ページにしか情報がない場合は schedules を空配列で返し、"
-        "extraction_notes に理由を書く\n"
+        "2. HTML 本文・添付 PDF に明示的に記載されている情報のみ抽出する（推測・補完しない）\n"
+        "3. 情報源が PDF のみの場合も必ず読み込んで抽出する\n"
         "4. intake は『2027年4月入学』『2026年度 第1次公募』のように"
         "既存データの表現に合わせる\n"
-        "5. note フィールドに対象プログラム・条件等の補足を記載する\n"
-        "6. 値が見つからないフィールドは省略する（空文字列は入れない）"
+        "5. benefits は『label=月額, value=20万円』のように原文表記を保つ。"
+        "推定や換算をしない。年額のみ記載があれば label='年額'\n"
+        "6. required_documents はリストの各項目を原文の表現で書く\n"
+        "7. 値が見つからないフィールドは省略する（空文字列は入れない）\n"
+        "8. 該当情報が一切ない場合は extraction_notes に理由を書く"
     )
 
-    user = (
-        f"## 制度名\n{program['name']} ({program.get('organization', '')})\n\n"
-        f"## 既存のスケジュール（参考: 同じ書式で返してください）\n"
-        f"```json\n{existing}\n```\n\n"
-        f"## 公式ページの本文 ({program['url']})\n```\n{page_text}\n```\n\n"
-        "本文から最新のスケジュール情報を抽出してください。"
+    pdf_list_text = (
+        "\n".join(f"- {u}" for u, _ in pdfs) if pdfs else "（添付なし）"
+    )
+    user_text = (
+        f"## 制度名\n{program['name']} ({program.get('organization', '')})\n"
+        f"公式URL: {program['url']}\n\n"
+        f"## 既存スケジュール（書式の参考）\n```json\n{existing_schedule}\n```\n\n"
+        f"## 既存 benefits（書式の参考）\n```json\n{existing_benefits}\n```\n\n"
+        f"## 既存 required_documents（書式の参考）\n```json\n{existing_docs}\n```\n\n"
+        f"## 公式ページ本文（HTML から抽出したテキスト）\n```\n{html_text}\n```\n\n"
+        f"## 添付 PDF\n{pdf_list_text}\n\n"
+        "上記すべての情報源から、最新の schedules / benefits / required_documents を抽出してください。"
     )
 
-    try:
-        response = client.messages.create(
-            model=MODEL,
-            max_tokens=8000,
-            system=system,
-            messages=[{"role": "user", "content": user}],
-            output_config={
-                "format": {"type": "json_schema", "schema": SCHEDULE_SCHEMA}
-            },
+    parts: list[types.Part] = [types.Part.from_text(text=user_text)]
+    for _, pdf_bytes in pdfs:
+        parts.append(
+            types.Part.from_bytes(data=pdf_bytes, mime_type="application/pdf")
         )
-    except anthropic.APIError as e:
-        print(f"  ⚠️ API error: {e}", file=sys.stderr)
+
+    try:
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=parts,
+            config=types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.0,
+                response_mime_type="application/json",
+                response_schema=PROGRAM_SCHEMA,
+            ),
+        )
+    except Exception as e:
+        print(f"  ⚠️ Gemini API error: {e}", file=sys.stderr)
         return None
 
-    if response.stop_reason == "refusal":
-        print(f"  ⚠️ refused", file=sys.stderr)
-        return None
-
-    text_block = next((b for b in response.content if b.type == "text"), None)
-    if not text_block:
-        print(f"  ⚠️ no text block in response", file=sys.stderr)
+    text = getattr(response, "text", None)
+    if not text:
+        print(f"  ⚠️ empty response", file=sys.stderr)
         return None
 
     try:
-        return json.loads(text_block.text)
+        return json.loads(text)
     except json.JSONDecodeError as e:
-        print(f"  ⚠️ JSON parse failed: {e}", file=sys.stderr)
+        print(f"  ⚠️ JSON parse failed: {e}\n  raw: {text[:500]}", file=sys.stderr)
         return None
+
+
+def benefits_list_to_dict(items: list[dict]) -> dict[str, str]:
+    """[{label, value}, ...] を {label: value} に変換。重複キーは末尾優先。"""
+    result: dict[str, str] = {}
+    for item in items:
+        label = (item.get("label") or "").strip()
+        value = (item.get("value") or "").strip()
+        if label and value:
+            result[label] = value
+    return result
 
 
 def main() -> int:
-    if not os.getenv("ANTHROPIC_API_KEY"):
-        print("ERROR: ANTHROPIC_API_KEY is not set", file=sys.stderr)
+    if not os.getenv("GEMINI_API_KEY"):
+        print("ERROR: GEMINI_API_KEY is not set", file=sys.stderr)
         return 1
 
-    client = anthropic.Anthropic()
+    client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
     data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
     today = datetime.now().strftime("%Y-%m-%d")
 
     changed = False
+    failures = 0
     summary: list[str] = []
+    programs = data.get("programs", [])
 
-    for program in data["programs"]:
+    for program in programs:
         url = program.get("url")
         if not url:
             continue
 
         print(f"\n=== {program['id']}: {program['name']} ===")
-        page_text = fetch_page_text(url)
-        if not page_text:
-            summary.append(f"❌ {program['id']}: fetch failed")
+
+        fetched = fetch_html(url)
+        if not fetched:
+            failures += 1
+            summary.append(f"❌ {program['id']}: html fetch failed")
             continue
 
-        result = extract_schedules(client, program, page_text, today)
+        html_text, soup = fetched
+
+        pdf_urls = collect_pdf_links(soup, url)
+        pdfs: list[tuple[str, bytes]] = []
+        for pdf_url in pdf_urls:
+            data_bytes = fetch_pdf_bytes(pdf_url)
+            if data_bytes:
+                pdfs.append((pdf_url, data_bytes))
+                print(f"  📎 pdf: {pdf_url} ({len(data_bytes) / 1024:.0f}KB)")
+
+        result = extract_program_data(client, program, html_text, pdfs, today)
         if not result:
+            failures += 1
             summary.append(f"❌ {program['id']}: extraction failed")
+            time.sleep(SLEEP_BETWEEN_CALLS)
             continue
 
-        new_schedules = result.get("schedules", [])
+        new_schedules = result.get("schedules", []) or []
+        new_benefits = benefits_list_to_dict(result.get("benefits", []) or [])
+        new_docs = [d for d in (result.get("required_documents", []) or []) if d.strip()]
         notes = result.get("extraction_notes", "")
-        print(f"  → {len(new_schedules)} schedule(s). notes: {notes}")
 
-        if not new_schedules:
-            summary.append(f"⏭ {program['id']}: no schedules extracted ({notes})")
-            continue
+        print(
+            f"  → schedules={len(new_schedules)}, "
+            f"benefits={len(new_benefits)}, docs={len(new_docs)}. "
+            f"notes: {notes}"
+        )
 
-        if program.get("application_schedule") != new_schedules:
+        program_changed = False
+        if new_schedules and program.get("application_schedule") != new_schedules:
             program["application_schedule"] = new_schedules
+            program_changed = True
+        if new_benefits and program.get("benefits") != new_benefits:
+            program["benefits"] = new_benefits
+            program_changed = True
+        if new_docs and program.get("required_documents") != new_docs:
+            program["required_documents"] = new_docs
+            program_changed = True
+
+        if program_changed:
             changed = True
             summary.append(
-                f"✏️ {program['id']}: updated ({len(new_schedules)} schedules)"
+                f"✏️ {program['id']}: updated "
+                f"(schedules={len(new_schedules)}, benefits={len(new_benefits)}, docs={len(new_docs)})"
             )
         else:
             summary.append(f"= {program['id']}: no change")
@@ -231,11 +370,18 @@ def main() -> int:
     for line in summary:
         print(line)
 
+    # 半数以上失敗したら Actions を failure 扱いにする
+    if programs and failures >= (len(programs) + 1) // 2:
+        print(
+            f"\n💀 {failures}/{len(programs)} programs failed — exiting with error",
+            file=sys.stderr,
+        )
+        return 1
+
     return 0
 
 
 if __name__ == "__main__":
-    # GitHub Actions のログを時系列で見るためバッファリング無効化
     sys.stdout.reconfigure(line_buffering=True)
     sys.stderr.reconfigure(line_buffering=True)
     sys.exit(main())
