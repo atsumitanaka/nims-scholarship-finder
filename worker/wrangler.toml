@@ -1,0 +1,14 @@
+name = "nims-scholarship-trigger"
+main = "src/worker.js"
+compatibility_date = "2026-01-01"
+
+# 公開可能な設定
+[vars]
+GITHUB_OWNER = "atsumitanaka"
+GITHUB_REPO = "nims-scholarship-finder"
+WORKFLOW_FILE = "update-schedules.yml"
+ALLOWED_ORIGIN = "https://atsumitanaka.github.io"
+
+# Secret は wrangler コマンドで設定する（このファイルには書かない）
+#   wrangler secret put GITHUB_TOKEN
+#   wrangler secret put TURNSTILE_SECRET   # 任意
