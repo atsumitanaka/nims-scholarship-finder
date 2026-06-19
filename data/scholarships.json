@@ -512,10 +512,10 @@
     },
     {
       "id": "tsukuba_graduate",
-      "name": "筑波大学大学院（NIMS連携）",
-      "name_en": "University of Tsukuba Graduate School (NIMS Partnership)",
+      "name": "筑波大学大学院 国際マテリアルズイノベーション学位プログラム（NIMS連携）",
+      "name_en": "University of Tsukuba - Materials Innovation Program (NIMS Cooperative)",
       "organization": "筑波大学",
-      "description": "筑波大学とNIMSの連携大学院プログラム。国際マテリアルズイノベーション学位プログラム、応用理工学学位プログラム（NIMS連係物質・材料工学サブプログラム含む）等。NIMSジュニア研究員制度との併用が可能。",
+      "description": "筑波大学 数理物質科学研究群「国際マテリアルズイノベーション学位プログラム」。NIMSの研究者が指導教員として参画する連携大学院プログラム。NIMSジュニア研究員制度との併用が可能。入試は年度ごとに7月実施・10月実施・2月実施などの区分がある。",
       "target_nationality": [
         "japanese",
         "foreign"
@@ -557,54 +557,11 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年4月入学（7月入試）",
-          "application_start": "2025年5月23日",
-          "web_registration": "2025年5月23日（金）12:00〜6月3日（火）15:00",
-          "exam_date": "2025年7月3日〜8日（口述）、7月18日（筆記）",
-          "result": "2025年7月18日〜7月25日",
-          "note": "博士前期課程、数理物質科学研究群"
-        },
-        {
-          "intake": "2026年4月入学（2月入試）",
-          "application_start": "2025年12月1日",
-          "web_registration": "2025年12月中旬〜1月上旬",
-          "deadline": "2026年1月上旬",
-          "document_deadline": "2026年1月中旬必着",
-          "exam_date": "2026年2月上旬",
-          "result": "2026年2月13日",
-          "enrollment_procedure": "2026年2月〜3月",
-          "note": "博士前期・後期課程、第2次募集"
-        },
-        {
-          "intake": "2026年10月入学",
-          "application_start": "2026年4月頃",
-          "web_registration": "2026年5月頃",
-          "deadline": "2026年6月頃",
-          "document_deadline": "2026年6月頃必着",
-          "exam_date": "2026年7月頃",
-          "result": "2026年8月頃",
-          "enrollment_procedure": "2026年8月〜9月",
-          "note": "主に留学生向け"
-        },
-        {
-          "intake": "2027年4月入学（7月入試）",
-          "application_start": "2026年5月頃",
-          "web_registration": "2026年5月下旬〜6月上旬",
-          "exam_date": "2026年7月頃",
-          "result": "2026年7月頃",
-          "enrollment_procedure": "2026年10月〜11月",
-          "note": "博士前期課程、数理物質科学研究群"
-        },
-        {
-          "intake": "2027年4月入学（2月入試）",
-          "application_start": "2026年12月上旬",
-          "deadline": "2027年1月上旬",
-          "exam_date": "2027年2月上旬",
-          "result": "2027年2月中旬",
-          "note": "博士前期・後期課程、第2次募集"
+          "intake": "2027年4月入学",
+          "note": "国際マテリアルズイノベーション学位プログラム。詳細な出願期間・締切は2026年11月中に公開予定（数理物質科学研究群案内ページ参照）"
         }
       ],
-      "url": "https://www.ap-graduate.tsukuba.ac.jp/",
+      "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/",
       "related_urls": [
         {
           "label": "入試スケジュール",
@@ -618,7 +575,8 @@
           "label": "数理物質科学研究群",
           "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/"
         }
-      ]
+      ],
+      "focus_program": "国際マテリアルズイノベーション学位プログラム"
     },
     {
       "id": "nims_icys",

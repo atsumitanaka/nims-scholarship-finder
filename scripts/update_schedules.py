@@ -202,6 +202,15 @@ def extract_program_data(
         program.get("required_documents", []), ensure_ascii=False, indent=2
     )
 
+    focus_program = (program.get("focus_program") or "").strip()
+    focus_rule = (
+        f"\n10. 本制度は **{focus_program}** に絞った情報のみ扱う。"
+        "公式ページに他のプログラム（例: 別の学位プログラム、別の研究科）の"
+        "スケジュール・支援内容・必要書類が記載されていても、それらは抽出しない。"
+        f"{focus_program} に明示的に該当する情報のみを返す。"
+        if focus_program else ""
+    )
+
     system_instruction = (
         "あなたは日本の奨学金・大学院・研究員制度の公式募集ページから"
         "最新の制度情報を漏れなく抽出する専門家です。以下を厳守してください:\n"
@@ -217,14 +226,20 @@ def extract_program_data(
         "成績証明書・推薦状・履歴書・志望理由書など、要求されているものを全て列挙\n"
         "8. 値が見つからないフィールドは省略する（空文字列は入れない）\n"
         "9. 該当情報が一切ない場合は extraction_notes に理由を書く"
+        + focus_rule
     )
 
     pdf_list_text = (
         "\n".join(f"- {u}" for u, _ in pdfs) if pdfs else "（添付なし）"
     )
+    focus_hint = (
+        f"\n注意: 本制度は **{focus_program}** に絞って情報を抽出してください。"
+        "公式ページに他のプログラムの情報が混在している場合、それらは無視してください。"
+        if focus_program else ""
+    )
     user_text = (
         f"## 制度名\n{program['name']} ({program.get('organization', '')})\n"
-        f"公式URL: {program['url']}\n\n"
+        f"公式URL: {program['url']}{focus_hint}\n\n"
         f"## 既存スケジュール（書式の参考）\n```json\n{existing_schedule}\n```\n\n"
         f"## 既存 benefits（書式の参考）\n```json\n{existing_benefits}\n```\n\n"
         f"## 既存 required_documents（書式の参考）\n```json\n{existing_docs}\n```\n\n"
