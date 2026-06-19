@@ -24,60 +24,66 @@
         "doctor"
       ],
       "benefits": {
-        "修士": "月額約16万円（月11日勤務）",
-        "博士": "月額約20万円（月14日勤務）",
-        "スタート支援金": "30万円（新規採用時、2025年4月入学者より適用）",
-        "保険": "社会保険・雇用保険加入"
+        "博士前期課程（修士）月額": "約160,000円（月11日勤務）",
+        "博士後期課程（博士）月額": "約200,000円（月14日勤務）",
+        "スタート支援金": "30万円（1回のみ、2025年4月入学者より適用）",
+        "保険": "労災保険加入"
       },
       "duration": {
         "修士": "最長2年",
         "博士": "最長3年"
       },
       "required_documents": [
-        "申請書（Word形式、所定様式）",
-        "履歴書（CV、様式自由）",
-        "成績証明書（学部・大学院、PDF）",
-        "英語スコア証明書（TOEIC L&R / TOEFL iBT / IELTS Academic、出願締切から2年以内のもの。TOEFL ITP・TOEIC IPは不可）",
-        "推薦者情報（2名、NIMSが直接連絡する場合あり）"
+        "申請書（指定word様式）",
+        "履歴書（指定excel様式）",
+        "成績証明書（博士後期課程の申請者は、学士と修士の両方）",
+        "2年以内に受験したTOEIC L&R・TOEFL iBT・IELTS academicいずれかのスコア証明書の写し"
       ],
       "application_schedule": [
         {
-          "intake": "2026年4月入学（マテリアルズイノベーション）",
-          "application_start": "2025年3月頃",
-          "deadline": "2025年4月22日",
-          "result": "大学出願期間の1-2ヶ月前",
-          "note": "筑波大学 国際マテリアルズイノベーション学位プログラム向け"
+          "intake": "2026年4月公募",
+          "application_start": "2026年4月1日",
+          "deadline": "2026年5月28日",
+          "document_screening": "6月中旬",
+          "university_recommendation": "7月中旬",
+          "exam_date": "8月下旬",
+          "first_result": "9月中旬",
+          "second_result": "2027年2月中旬",
+          "adoption_date": "2027年4月",
+          "note": "筑波大学連携大学院向け"
         },
         {
-          "intake": "2026年4月・10月入学（8月入試連動）",
-          "application_start": "2025年4月頃",
-          "deadline": "2025年8月20日",
-          "exam_date": "2025年8月下旬",
-          "result": "2025年9月中旬",
-          "note": "筑波大学 NIMS連係物質・材料工学サブプログラム向け"
+          "intake": "2026年9月公募",
+          "application_start": "2026年9月1日",
+          "deadline": "2026年10月22日",
+          "document_screening": "11月下旬",
+          "university_recommendation": "11月下旬～12月上旬",
+          "exam_date": "2027年1月下旬",
+          "first_result": "2027年2月中旬",
+          "adoption_date": "2027年4月または2027年10月",
+          "note": "筑波大学連携大学院向け"
         },
         {
-          "intake": "2026年4月・10月入学（一般）",
-          "application_start": "2025年7月頃",
-          "deadline": "2025年10月23日",
-          "result": "大学出願期間の1-2ヶ月前",
-          "note": "筑波大学 一般枠（応用理工学等）"
+          "intake": "2026年3月公募（MI）",
+          "application_start": "2026年3月3日",
+          "deadline": "2026年4月14日",
+          "document_screening": "4月下旬",
+          "interview": "5月中旬",
+          "first_result": "5月下旬～6月上旬",
+          "second_result": "7月中旬",
+          "adoption_date": "2026年10月または2027年4月",
+          "note": "国際マテリアルズイノベーション学位プログラム向け"
         },
         {
-          "intake": "2027年4月入学（8月入試）",
-          "application_start": "2026年4月頃",
-          "deadline": "2026年8月頃",
-          "exam_date": "2026年8月下旬",
-          "result": "2026年9月中旬",
-          "note": "筑波大学8月入試と連動"
-        },
-        {
-          "intake": "2027年4月入学（2月入試）",
-          "application_start": "2026年10月頃",
-          "deadline": "2027年1月上旬",
-          "exam_date": "2027年2月上旬",
-          "result": "2027年2月中旬",
-          "note": "筑波大学1-2月入試と連動"
+          "intake": "2026年7月公募（MI）",
+          "application_start": "2026年7月1日",
+          "deadline": "2026年7月30日",
+          "document_screening": "8月上旬",
+          "interview": "8月中下旬",
+          "first_result": "8月下旬～9月上旬",
+          "second_result": "10月下旬",
+          "adoption_date": "2027年4月または2027年10月",
+          "note": "国際マテリアルズイノベーション学位プログラム向け"
         }
       ],
       "url": "https://www.nims.go.jp/hr-development/junior-researcher.html",
@@ -548,12 +554,11 @@
         "国際マテリアルズイノベーション学位プログラム"
       ],
       "required_documents": [
-        "入学願書（Web出願システムで入力）",
         "卒業（見込）証明書",
-        "学位取得（見込）証明書（該当者のみ）",
+        "学位取得（見込）証明書",
         "成績証明書",
-        "Summary of Research and Future Research Plans（国際マテリアルズイノベーション学位プログラム全員）",
-        "Reference Letter（国際マテリアルズイノベーション学位プログラム出願者（社会人特別選抜を除く））",
+        "Summary of Research and Future Research Plans",
+        "Reference Letter（社会人特別選抜を除く）",
         "検定料収納証明書（コンビニエンスストア利用時）",
         "検定料のクレジットカード支払い申込内容照会結果画面のコピー（クレジットカード利用時）",
         "受験・就学承認書（該当者のみ）",
