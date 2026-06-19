@@ -6,25 +6,16 @@
       "name_en": "NIMS Junior Researcher Program",
       "organization": "NIMS（物質・材料研究機構）",
       "description": "NIMSで学位取得のための研究を行う大学院生を任期制職員として雇用する制度。奨学金ではなく雇用形態。NIMS連携大学院（筑波大、北大、東京科学大、横国大、早稲田、阪大、九大）に在籍する学生が対象。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "bachelor",
-        "master"
-      ],
-      "desired_path": [
-        "master",
-        "doctor"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["bachelor", "master"],
+      "desired_path": ["master", "doctor"],
       "tsukuba_related": true,
-      "tsukuba_degree": [
-        "master",
-        "doctor"
-      ],
+      "tsukuba_degree": ["master", "doctor"],
       "benefits": {
-        "スタート支援金": "30万円（1回のみ）"
+        "修士": "月額約16万円（月11日勤務）",
+        "博士": "月額約20万円（月14日勤務）",
+        "スタート支援金": "30万円（新規採用時、2025年4月入学者より適用）",
+        "保険": "社会保険・雇用保険加入"
       },
       "duration": {
         "修士": "最長2年",
@@ -39,23 +30,49 @@
       ],
       "application_schedule": [
         {
-          "intake": "2025年4月入学"
+          "intake": "2026年4月入学（マテリアルズイノベーション）",
+          "application_start": "2025年3月頃",
+          "deadline": "2025年4月22日",
+          "result": "大学出願期間の1-2ヶ月前",
+          "note": "筑波大学 国際マテリアルズイノベーション学位プログラム向け"
+        },
+        {
+          "intake": "2026年4月・10月入学（8月入試連動）",
+          "application_start": "2025年4月頃",
+          "deadline": "2025年8月20日",
+          "exam_date": "2025年8月下旬",
+          "result": "2025年9月中旬",
+          "note": "筑波大学 NIMS連係物質・材料工学サブプログラム向け"
+        },
+        {
+          "intake": "2026年4月・10月入学（一般）",
+          "application_start": "2025年7月頃",
+          "deadline": "2025年10月23日",
+          "result": "大学出願期間の1-2ヶ月前",
+          "note": "筑波大学 一般枠（応用理工学等）"
+        },
+        {
+          "intake": "2027年4月入学（8月入試）",
+          "application_start": "2026年4月頃",
+          "deadline": "2026年8月頃",
+          "exam_date": "2026年8月下旬",
+          "result": "2026年9月中旬",
+          "note": "筑波大学8月入試と連動"
+        },
+        {
+          "intake": "2027年4月入学（2月入試）",
+          "application_start": "2026年10月頃",
+          "deadline": "2027年1月上旬",
+          "exam_date": "2027年2月上旬",
+          "result": "2027年2月中旬",
+          "note": "筑波大学1-2月入試と連動"
         }
       ],
       "url": "https://www.nims.go.jp/hr-development/junior-researcher.html",
       "related_urls": [
-        {
-          "label": "NIMS大学院プログラム",
-          "url": "https://www.nims.go.jp/students/"
-        },
-        {
-          "label": "申請方法",
-          "url": "https://www.nims.go.jp/students/how/"
-        },
-        {
-          "label": "筑波大学NIMS連携",
-          "url": "https://www.nims.go.jp/tsukuba/en/junior/"
-        }
+        {"label": "NIMS大学院プログラム", "url": "https://www.nims.go.jp/students/"},
+        {"label": "申請方法", "url": "https://www.nims.go.jp/students/how/"},
+        {"label": "筑波大学NIMS連携", "url": "https://www.nims.go.jp/tsukuba/en/junior/"}
       ]
     },
     {
@@ -64,24 +81,15 @@
       "name_en": "NIMS Internship Program",
       "organization": "NIMS（物質・材料研究機構）",
       "description": "国内外の大学・大学院・高専（本科4年次以上）に在籍中の学生を対象としたインターンシップ。NIMS研究者の指導のもとで研究活動を体験できる。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "bachelor",
-        "master",
-        "doctor"
-      ],
-      "desired_path": [
-        "intern"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["bachelor", "master", "doctor"],
+      "desired_path": ["intern"],
       "tsukuba_related": false,
       "benefits": {
-        "支援対象期間": "4月以降〜翌年3月31日",
-        "支援日数": "最大90日",
-        "支援内容": "日当および宿泊費（NIMSの審査の結果、優秀と認められる学生に支援）",
-        "交通費": "学部生のみ往復航空券および国内交通費を支給"
+        "日当": "2,560円/日（つくば市内通勤・宿泊を伴わない場合は不支給）",
+        "宿泊費": "上限あり（NIMSが手配・予約）",
+        "航空券": "学部生のみ往復航空券・国内交通費支援あり",
+        "注意事項": "国費留学生・JSPS特別研究員・JST支援受給者は滞在費サポート対象外"
       },
       "duration": {
         "第1次公募": "4月〜翌年3月の間で連続90日以内",
@@ -92,10 +100,12 @@
         "備考": "大学とNIMSのMOU締結不要。研修期間中に学生であること"
       },
       "required_documents": [
-        "NIMSインターンシップ申込書",
-        "履歴書",
-        "在学証明書（直近3ヶ月以内）",
-        "成績証明書（学部課程から現在まで）"
+        "NIMSインターンシップ申込書（英語で記入）",
+        "履歴書（CV）",
+        "在学証明書（英語、3ヶ月以内発行）",
+        "成績証明書（英語、学部・大学院）",
+        "パスポートコピー（留学生の場合）",
+        "指導教員の推薦状（NIMS研究者経由で依頼）"
       ],
       "application_schedule": [
         {
@@ -125,18 +135,9 @@
       ],
       "url": "https://www.nims.go.jp/hr-development/internship.html",
       "related_urls": [
-        {
-          "label": "FAQ",
-          "url": "https://www.nims.go.jp/hr-development/hnp5bq000000b7cq.html"
-        },
-        {
-          "label": "研究者総覧SAMURAI",
-          "url": "https://samurai.nims.go.jp/"
-        },
-        {
-          "label": "研究人材育成",
-          "url": "https://www.nims.go.jp/hr-development/"
-        }
+        {"label": "FAQ", "url": "https://www.nims.go.jp/hr-development/hnp5bq000000b7cq.html"},
+        {"label": "研究者総覧SAMURAI", "url": "https://samurai.nims.go.jp/"},
+        {"label": "研究人材育成", "url": "https://www.nims.go.jp/hr-development/"}
       ]
     },
     {
@@ -145,21 +146,14 @@
       "name_en": "JSPS Research Fellowship for Young Scientists (DC)",
       "organization": "日本学術振興会（JSPS）",
       "description": "優れた若手研究者に研究に専念する機会を与え、創造性に富んだ研究者の養成を目的とした制度。国籍不問（日本の大学の博士課程に在籍する必要あり）。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "bachelor",
-        "master"
-      ],
-      "desired_path": [
-        "doctor"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["bachelor", "master"],
+      "desired_path": ["doctor"],
       "tsukuba_related": false,
       "benefits": {
-        "月額（PD）": "362,000円",
-        "月額（DC1・DC2）": "227,000円（予定）"
+        "研究奨励金": "月額20万円",
+        "研究費": "年間最大150万円（特別研究員奨励費）",
+        "特別手当": "最終年度に優秀な成果を上げた者に月額3万円追加（最大12ヶ月）"
       },
       "duration": {
         "DC1": "3年間",
@@ -171,28 +165,35 @@
       },
       "required_documents": [
         "申請書情報（電子申請システムで入力）",
-        "申請内容ファイル"
+        "申請内容ファイル（研究計画書、Wordテンプレート→PDF変換）",
+        "評価書（指導教員等が電子申請システムで提出）",
+        "特別研究員奨励費応募調書（研究費計画）"
       ],
       "application_schedule": [
         {
-          "intake": "2027年度採用分（PD・DC1・DC2）",
-          "note": "申請機関ごとの受付期間については、各大学の窓口へ確認が必要"
+          "intake": "2026年4月採用",
+          "application_start": "2025年4月上旬",
+          "deadline": "2025年6月3日（火）17:00",
+          "first_result": "2025年10月上旬（電子申請システムで開示）",
+          "second_result": "2026年1月上旬",
+          "adoption_date": "2026年4月1日",
+          "note": "所属機関を通じて電子申請、学内締切は各大学で異なる"
+        },
+        {
+          "intake": "2027年4月採用",
+          "application_start": "2026年4月上旬",
+          "deadline": "2026年6月3日（水）17:00",
+          "first_result": "2026年8月上旬〜中旬（電子申請システムで開示）",
+          "second_result": "2027年1月頃",
+          "adoption_date": "2027年4月1日",
+          "note": "所属機関を通じて電子申請、二段階書面審査方式"
         }
       ],
       "url": "https://www.jsps.go.jp/j-pd/",
       "related_urls": [
-        {
-          "label": "募集要項",
-          "url": "https://www.jsps.go.jp/j-pd/pd_sin.html"
-        },
-        {
-          "label": "選考日程",
-          "url": "https://www.jsps.go.jp/j-pd/pd_nittei.html"
-        },
-        {
-          "label": "申請資格・支給経費",
-          "url": "https://www.jsps.go.jp/j-pd/pd_oubo.html"
-        }
+        {"label": "募集要項", "url": "https://www.jsps.go.jp/j-pd/pd_sin.html"},
+        {"label": "選考日程", "url": "https://www.jsps.go.jp/j-pd/pd_nittei.html"},
+        {"label": "申請資格・支給経費", "url": "https://www.jsps.go.jp/j-pd/pd_oubo.html"}
       ]
     },
     {
@@ -201,20 +202,14 @@
       "name_en": "JSPS Research Fellowship for Young Scientists (PD)",
       "organization": "日本学術振興会（JSPS）",
       "description": "博士号取得者を対象とした特別研究員制度。自由な発想のもとに研究に専念する機会を提供。国籍不問。博士号取得機関とは異なる研究機関への移動が必須。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "doctor"
-      ],
-      "desired_path": [
-        "postdoc"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["doctor"],
+      "desired_path": ["postdoc"],
       "tsukuba_related": false,
       "benefits": {
-        "月額（PD）": "362,000円（研究奨励金）",
-        "月額（DC）": "227,000円（研究奨励金・予定）"
+        "研究奨励金": "月額36.2万円",
+        "研究費": "年間最大150万円（特別研究員奨励費）",
+        "特別手当": "最終年度に優秀な成果を上げた者に月額3万円追加（最大12ヶ月）"
       },
       "duration": {
         "PD": "3年間"
@@ -224,34 +219,35 @@
       },
       "required_documents": [
         "申請書情報（電子申請システムで入力）",
-        "申請内容ファイル",
-        "評価書",
-        "特別研究員奨励費応募調書"
+        "申請内容ファイル（研究計画書、Wordテンプレート→PDF変換）",
+        "評価書（電子申請システムで提出）",
+        "特別研究員奨励費応募調書（研究費計画）"
       ],
       "application_schedule": [
         {
-          "intake": "2027年4月採用（PD）",
-          "note": "詳細は募集要項を参照。申請機関を通じて電子申請。"
+          "intake": "2026年4月採用",
+          "application_start": "2025年4月上旬",
+          "deadline": "2025年6月3日（火）17:00",
+          "first_result": "2025年10月上旬（電子申請システムで開示）",
+          "second_result": "2026年1月上旬",
+          "adoption_date": "2026年4月1日",
+          "note": "所属機関を通じて電子申請"
         },
         {
-          "intake": "2027年4月採用（DC1・DC2）",
-          "note": "詳細は募集要項を参照。申請機関を通じて電子申請。"
+          "intake": "2027年4月採用",
+          "application_start": "2026年4月上旬",
+          "deadline": "2026年6月3日（水）17:00",
+          "first_result": "2026年8月上旬〜中旬（電子申請システムで開示）",
+          "second_result": "2027年1月頃",
+          "adoption_date": "2027年4月1日",
+          "note": "所属機関を通じて電子申請、二段階書面審査方式"
         }
       ],
       "url": "https://www.jsps.go.jp/j-pd/",
       "related_urls": [
-        {
-          "label": "募集要項",
-          "url": "https://www.jsps.go.jp/j-pd/pd_sin.html"
-        },
-        {
-          "label": "選考日程",
-          "url": "https://www.jsps.go.jp/j-pd/pd_nittei.html"
-        },
-        {
-          "label": "制度概要",
-          "url": "https://www.jsps.go.jp/j-pd/pd_gaiyo.html"
-        }
+        {"label": "募集要項", "url": "https://www.jsps.go.jp/j-pd/pd_sin.html"},
+        {"label": "選考日程", "url": "https://www.jsps.go.jp/j-pd/pd_nittei.html"},
+        {"label": "制度概要", "url": "https://www.jsps.go.jp/j-pd/pd_gaiyo.html"}
       ]
     },
     {
@@ -260,19 +256,14 @@
       "name_en": "JSPS Research Fellowship (RPD - Restart Postdoctoral Fellowship)",
       "organization": "日本学術振興会（JSPS）",
       "description": "出産・育児により研究を中断した研究者が、円滑に研究現場に復帰できるよう支援する制度。国籍不問。令和8年度より対象が「小学生以下の子を持つ者」に拡充。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "doctor"
-      ],
-      "desired_path": [
-        "postdoc"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["doctor"],
+      "desired_path": ["postdoc"],
       "tsukuba_related": false,
       "benefits": {
-        "月額": "227,000円（DC：研究奨励金・予定）"
+        "研究奨励金": "月額36.2万円",
+        "研究費": "年間最大150万円（特別研究員奨励費）",
+        "特別手当": "最終年度に優秀な成果を上げた者に月額3万円追加（最大12ヶ月）"
       },
       "duration": {
         "RPD": "3年間"
@@ -289,22 +280,26 @@
       ],
       "application_schedule": [
         {
-          "intake": "2027年度採用分（PD）"
+          "intake": "2026年度採用",
+          "application_start": "2025年3月中旬",
+          "deadline": "2025年5月12日（月）17:00",
+          "result": "2025年8月上旬〜中旬",
+          "adoption_date": "2026年4月1日、7月1日、10月1日、2027年1月1日から選択",
+          "note": "採用開始日を4つの時期から選択可能"
         },
         {
-          "intake": "2027年度採用分（DC1・DC2）"
+          "intake": "2027年度採用",
+          "application_start": "2026年3月中旬",
+          "deadline": "2026年5月11日（月）17:00",
+          "result": "2026年8月上旬〜中旬",
+          "adoption_date": "2027年4月1日、7月1日、10月1日、2028年1月1日から選択",
+          "note": "所属機関を通じて電子申請、採用開始日を4つの時期から選択可能"
         }
       ],
       "url": "https://www.jsps.go.jp/j-pd/",
       "related_urls": [
-        {
-          "label": "募集要項（RPD）",
-          "url": "https://www.jsps.go.jp/j-pd/rpd_sin.html"
-        },
-        {
-          "label": "制度概要（RPD）",
-          "url": "https://www.jsps.go.jp/j-pd/rpd_gaiyo.html"
-        }
+        {"label": "募集要項（RPD）", "url": "https://www.jsps.go.jp/j-pd/rpd_sin.html"},
+        {"label": "制度概要（RPD）", "url": "https://www.jsps.go.jp/j-pd/rpd_gaiyo.html"}
       ]
     },
     {
@@ -313,25 +308,18 @@
       "name_en": "JSPS Postdoctoral Fellowship for Foreign Researchers",
       "organization": "日本学術振興会（JSPS）",
       "description": "諸外国の優秀な若手研究者を日本の大学等に受け入れ、日本側研究者との共同研究を行う機会を提供。一般プログラムと欧米短期プログラムがある。",
-      "target_nationality": [
-        "foreign"
-      ],
-      "current_education": [
-        "doctor"
-      ],
-      "desired_path": [
-        "postdoc"
-      ],
+      "target_nationality": ["foreign"],
+      "current_education": ["doctor"],
+      "desired_path": ["postdoc"],
       "tsukuba_related": false,
       "benefits": {
-        "滞在費（一般）": "月額362,000円",
-        "滞在費（欧米短期・ASEAN/アフリカ短期・博士号取得者）": "月額362,000円",
-        "滞在費（欧米短期・ASEAN/アフリカ短期・博士号取得見込者）": "200,000円",
-        "渡航費": "往復国際航空券（現物支給）",
-        "渡日一時金": "定額200,000円（採用期間開始前から日本に居住実態がなく、かつ、採用期間が3か月以上の場合）",
+        "滞在費（一般・博士号取得者）": "月額362,000円",
+        "滞在費（欧米短期・博士号取得者）": "月額362,000円",
+        "滞在費（欧米短期・博士号未取得者）": "月額200,000円",
+        "渡航費": "往復航空賃支給（エコノミークラス）",
+        "渡日一時金": "200,000円（一般：全員、欧米短期：3ヶ月以上滞在者）",
         "海外旅行保険": "加入費用支給",
-        "研究費（欧米短期・ASEAN/アフリカ短期）": "上限採用月数×70,000円",
-        "研究費（一般）": "特別研究員奨励費に応募可能"
+        "研究費（欧米短期）": "採用月数×7万円（上限）"
       },
       "duration": {
         "一般": "12〜24ヶ月",
@@ -344,10 +332,10 @@
       "required_documents": [
         "申請書（電子申請システム）",
         "研究計画書",
-        "推薦状",
+        "推薦状（指導教員等、受入研究者とは別の者）",
         "博士学位証明書（または取得見込証明書）",
         "業績リスト",
-        "受入研究者承諾書"
+        "受入研究者承諾書（受入研究者が署名）"
       ],
       "application_schedule": [
         {
@@ -401,22 +389,10 @@
       ],
       "url": "https://www.jsps.go.jp/j-fellow/",
       "related_urls": [
-        {
-          "label": "一般プログラム",
-          "url": "https://www.jsps.go.jp/j-fellow/j-ippan/gaiyou.html"
-        },
-        {
-          "label": "申請スケジュール（一般）",
-          "url": "https://www.jsps.go.jp/j-fellow/j-ippan/boshu.html"
-        },
-        {
-          "label": "欧米短期プログラム",
-          "url": "https://www.jsps.go.jp/j-fellow/j-oubei-s/gaiyou.html"
-        },
-        {
-          "label": "申請スケジュール（欧米短期）",
-          "url": "https://www.jsps.go.jp/j-fellow/j-oubei-s/boshu.html"
-        }
+        {"label": "一般プログラム", "url": "https://www.jsps.go.jp/j-fellow/j-ippan/gaiyou.html"},
+        {"label": "申請スケジュール（一般）", "url": "https://www.jsps.go.jp/j-fellow/j-ippan/boshu.html"},
+        {"label": "欧米短期プログラム", "url": "https://www.jsps.go.jp/j-fellow/j-oubei-s/gaiyou.html"},
+        {"label": "申請スケジュール（欧米短期）", "url": "https://www.jsps.go.jp/j-fellow/j-oubei-s/boshu.html"}
       ]
     },
     {
@@ -425,24 +401,18 @@
       "name_en": "MEXT Scholarship (Research Student)",
       "organization": "文部科学省（MEXT）",
       "description": "日本政府が提供する外国人留学生向け奨学金制度。大使館推薦と大学推薦の2つの応募ルートがある。",
-      "target_nationality": [
-        "foreign"
-      ],
-      "current_education": [
-        "bachelor",
-        "master"
-      ],
-      "desired_path": [
-        "master",
-        "doctor"
-      ],
+      "target_nationality": ["foreign"],
+      "current_education": ["bachelor", "master"],
+      "desired_path": ["master", "doctor"],
       "tsukuba_related": false,
       "benefits": {
-        "授業料": "免除（国立大学等の場合）または国が負担（公立・私立大学等の場合）",
-        "入学料": "免除（国立大学等の場合）または国が負担（公立・私立大学等の場合）",
-        "検定料": "免除（国立大学等の場合）または国が負担（公立・私立大学等の場合）",
-        "渡日旅費": "支給",
-        "帰国旅費": "支給"
+        "奨学金（予備教育・非正規生）": "月額143,000円",
+        "奨学金（修士課程）": "月額144,000円",
+        "奨学金（博士課程）": "月額145,000円",
+        "地域加算": "指定地域で月額2,000〜3,000円追加",
+        "渡航費": "往復航空券支給（エコノミークラス）",
+        "授業料": "国立大学は不徴収、公立・私立大学は国が負担",
+        "日本語予備教育": "6ヶ月間の日本語研修（必要な場合）"
       },
       "duration": {
         "修士": "2年間（+予備教育期間）",
@@ -455,46 +425,45 @@
         "成績": "GPA 2.30以上（3.0スケール）"
       },
       "required_documents": [
-        "申請書（所定様式）",
+        "申請書（所定様式、1部＋写し2部）",
         "専攻分野及び研究計画書",
-        "成績証明書",
+        "成績証明書（学部・大学院）",
         "卒業（修了）証明書",
         "推薦状",
-        "言語能力証明書",
+        "言語能力証明書（JLPT/TOEFL等）",
         "健康診断書"
       ],
       "application_schedule": [
         {
-          "intake": "2027年4月入学（大使館推薦）",
-          "note": "在外日本大使館に申請"
+          "intake": "2026年4月・10月入学（大使館推薦）",
+          "application_start": "2025年4月頃",
+          "first_screening": "2025年4月〜7月（在外公館で書類審査・筆記試験・面接）",
+          "university_contact_deadline": "2025年9月1日（日本時間）までに大学へ受入内諾依頼",
+          "second_screening": "2025年11月〜12月（文部科学省）",
+          "result": "2026年1月〜3月頃（在外公館から通知）",
+          "note": "在外日本大使館に申請、国によりスケジュールが異なる"
         },
         {
-          "intake": "2026年度 第1次公募（大学推薦・研究留学生）",
+          "intake": "2026年10月入学（大学推薦・一般枠）",
+          "application_start": "2025年11月〜12月頃",
+          "deadline": "2026年1月〜2月頃（大学により異なる）",
+          "university_recommendation": "2026年2月〜3月頃（大学から文科省へ推薦）",
+          "result": "2026年6月頃",
           "note": "希望大学に直接申請。MEXT承認大学のみ推薦可能"
         },
         {
-          "intake": "2026年度 第1次公募（大学推薦・日本語・日本文化研修留学生）",
-          "note": "希望大学に直接申請"
-        },
-        {
-          "intake": "2026年度 第1次公募（大学推薦・研究留学生・学部留学生・特別枠）",
-          "note": "希望大学に直接申請"
-        },
-        {
-          "intake": "2026年度 第1次公募（大使館推薦・日本語・日本文化研修留学生及び教員研修留学生）",
+          "intake": "2027年4月・10月入学（大使館推薦）",
+          "application_start": "2026年4月頃",
+          "first_screening": "2026年4月〜7月（在外公館で書類審査・筆記試験・面接）",
+          "university_contact_deadline": "2026年9月1日までに大学へ受入内諾依頼",
+          "result": "2027年1月〜3月頃",
           "note": "在外日本大使館に申請"
         }
       ],
       "url": "https://www.mext.go.jp/a_menu/koutou/ryugaku/06032818.htm",
       "related_urls": [
-        {
-          "label": "2026年度募集要項（大使館推薦）",
-          "url": "https://www.mext.go.jp/a_menu/koutou/ryugaku/boshu/1415352_00007.htm"
-        },
-        {
-          "label": "Study in Japan",
-          "url": "https://www.studyinjapan.go.jp/ja/planning/scholarships/mext-scholarships/"
-        }
+        {"label": "2026年度募集要項（大使館推薦）", "url": "https://www.mext.go.jp/a_menu/koutou/ryugaku/boshu/1415352_00007.htm"},
+        {"label": "Study in Japan", "url": "https://www.studyinjapan.go.jp/ja/planning/scholarships/mext-scholarships/"}
       ]
     },
     {
@@ -503,23 +472,11 @@
       "name_en": "University of Tsukuba Graduate School (NIMS Partnership)",
       "organization": "筑波大学",
       "description": "筑波大学とNIMSの連携大学院プログラム。国際マテリアルズイノベーション学位プログラム、応用理工学学位プログラム（NIMS連係物質・材料工学サブプログラム含む）等。NIMSジュニア研究員制度との併用が可能。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "bachelor",
-        "master"
-      ],
-      "desired_path": [
-        "master",
-        "doctor"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["bachelor", "master"],
+      "desired_path": ["master", "doctor"],
       "tsukuba_related": true,
-      "tsukuba_degree": [
-        "master",
-        "doctor"
-      ],
+      "tsukuba_degree": ["master", "doctor"],
       "benefits": {
         "NIMSジュニア研究員": "併用可能（別途応募要）",
         "検定料": "30,000円（国費留学生は免除）",
@@ -539,35 +496,62 @@
         "卒業（見込）証明書",
         "英語スコア証明書（TOEIC L&R / TOEFL iBT / IELTS Academic。TOEFL ITP・TOEIC IPは不可）",
         "検定料納付証明",
-        "写真",
-        "誓約書（オンライン受験者のみ）"
+        "写真"
       ],
       "application_schedule": [
         {
-          "intake": "2026年7月実施大学院入学試験",
-          "exam_date": "2026年7月3日～2026年7月7日",
-          "result": "2026年7月21日"
+          "intake": "2026年4月入学（7月入試）",
+          "application_start": "2025年5月23日",
+          "web_registration": "2025年5月23日（金）12:00〜6月3日（火）15:00",
+          "exam_date": "2025年7月3日〜8日（口述）、7月18日（筆記）",
+          "result": "2025年7月18日〜7月25日",
+          "note": "博士前期課程、数理物質科学研究群"
         },
         {
-          "intake": "リスク・レジリエンス工学学位プログラム（博士後期課程）2026年10月入学",
-          "exam_date": "2026年7月6日",
-          "note": "一般入学試験（7月実施）、社会人特別選抜（7月実施）の日程修正"
+          "intake": "2026年4月入学（2月入試）",
+          "application_start": "2025年12月1日",
+          "web_registration": "2025年12月中旬〜1月上旬",
+          "deadline": "2026年1月上旬",
+          "document_deadline": "2026年1月中旬必着",
+          "exam_date": "2026年2月上旬",
+          "result": "2026年2月13日",
+          "enrollment_procedure": "2026年2月〜3月",
+          "note": "博士前期・後期課程、第2次募集"
+        },
+        {
+          "intake": "2026年10月入学",
+          "application_start": "2026年4月頃",
+          "web_registration": "2026年5月頃",
+          "deadline": "2026年6月頃",
+          "document_deadline": "2026年6月頃必着",
+          "exam_date": "2026年7月頃",
+          "result": "2026年8月頃",
+          "enrollment_procedure": "2026年8月〜9月",
+          "note": "主に留学生向け"
+        },
+        {
+          "intake": "2027年4月入学（7月入試）",
+          "application_start": "2026年5月頃",
+          "web_registration": "2026年5月下旬〜6月上旬",
+          "exam_date": "2026年7月頃",
+          "result": "2026年7月頃",
+          "enrollment_procedure": "2026年10月〜11月",
+          "note": "博士前期課程、数理物質科学研究群"
+        },
+        {
+          "intake": "2027年4月入学（2月入試）",
+          "application_start": "2026年12月上旬",
+          "deadline": "2027年1月上旬",
+          "exam_date": "2027年2月上旬",
+          "result": "2027年2月中旬",
+          "note": "博士前期・後期課程、第2次募集"
         }
       ],
       "url": "https://www.ap-graduate.tsukuba.ac.jp/",
       "related_urls": [
-        {
-          "label": "入試スケジュール",
-          "url": "https://www.tsukuba.ac.jp/admission/graduate-overview/information/"
-        },
-        {
-          "label": "NIMS大学院プログラム",
-          "url": "https://www.nims.go.jp/students/program/"
-        },
-        {
-          "label": "数理物質科学研究群",
-          "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/"
-        }
+        {"label": "入試スケジュール", "url": "https://www.tsukuba.ac.jp/admission/graduate-overview/information/"},
+        {"label": "NIMS大学院プログラム", "url": "https://www.nims.go.jp/students/program/"},
+        {"label": "数理物質科学研究群", "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/"}
       ]
     },
     {
@@ -576,21 +560,17 @@
       "name_en": "NIMS ICYS Research Fellow",
       "organization": "NIMS 若手国際研究センター（ICYS）",
       "description": "博士取得後の若手研究者を対象とした独立研究者育成プログラム。NIMSの先端研究施設を利用しながら独立した研究を追求できる。NIMS定年制研究員への優遇措置あり（約5割採用）。",
-      "target_nationality": [
-        "japanese",
-        "foreign"
-      ],
-      "current_education": [
-        "doctor"
-      ],
-      "desired_path": [
-        "postdoc"
-      ],
+      "target_nationality": ["japanese", "foreign"],
+      "current_education": ["doctor"],
+      "desired_path": ["postdoc"],
       "tsukuba_related": false,
       "benefits": {
-        "ICYS PI 研究費": "年間400万円",
-        "ICYS Research Fellow 研究費": "年間200万円",
-        "給与": "Competitive salary"
+        "年俸": "約535万円〜588万円（評価により変動、国内最高ランク）",
+        "研究費": "年間200万円",
+        "共用施設": "使用料補助あり",
+        "メンター": "2名配置（NIMS内外の専門家）",
+        "福利厚生": "社会保険完備、産休・育休あり",
+        "勤務時間": "1日7時間45分（裁量労働制あり）"
       },
       "duration": {
         "初期": "3年間",
@@ -643,50 +623,31 @@
       ],
       "url": "https://www.nims.go.jp/icys/",
       "related_urls": [
-        {
-          "label": "採用情報",
-          "url": "https://www.nims.go.jp/icys/recruitment/"
-        },
-        {
-          "label": "応募書類ダウンロード",
-          "url": "https://www.nims.go.jp/icys/recruitment/application.html"
-        },
-        {
-          "label": "ICYSについて",
-          "url": "https://www.nims.go.jp/icys/about/"
-        },
-        {
-          "label": "NIMS採用情報",
-          "url": "https://www.nims.go.jp/employment/"
-        },
-        {
-          "label": "JREC-IN募集情報",
-          "url": "https://jrecin.jst.go.jp/seek/SeekJorDetail?id=D125090152"
-        }
+        {"label": "採用情報", "url": "https://www.nims.go.jp/icys/recruitment/"},
+        {"label": "応募書類ダウンロード", "url": "https://www.nims.go.jp/icys/recruitment/application.html"},
+        {"label": "ICYSについて", "url": "https://www.nims.go.jp/icys/about/"},
+        {"label": "NIMS採用情報", "url": "https://www.nims.go.jp/employment/"},
+        {"label": "JREC-IN募集情報", "url": "https://jrecin.jst.go.jp/seek/SeekJorDetail?id=D125090152"}
       ]
-    },
+    }
+    ,
     {
       "id": "nims_icgp",
       "name": "NIMS ICGP（国際共同大学院プログラム）",
       "name_en": "NIMS International Cooperative Graduate Program (ICGP)",
       "organization": "NIMS（物質・材料研究機構）",
       "description": "NIMSとICGP協定を締結した海外大学の大学院生が、NIMSで6〜12ヶ月間の学位研究を行うプログラム。NIMS研究者が共同指導教員として学位論文を共同指導する。45機関（アジア・オセアニア29、欧州14、米州2）と協定締結済。",
-      "target_nationality": [
-        "foreign"
-      ],
-      "current_education": [
-        "master",
-        "doctor"
-      ],
-      "desired_path": [
-        "doctor"
-      ],
+      "target_nationality": ["foreign"],
+      "current_education": ["master", "doctor"],
+      "desired_path": ["doctor"],
       "tsukuba_related": false,
       "benefits": {
-        "生活手当": "NIMS provides living allowance",
-        "宿泊施設": "Accommodation fee in Tsukuba (Ninomiya House)",
-        "ビザ": "Arrangements supported by NIMS",
-        "サポート": "Technical/administrative support in English at NIMS, Daily-life support service"
+        "生活手当": "月額120,000円",
+        "宿泊施設": "二宮ハウス（つくば市、家具付き）",
+        "ビザ": "文化活動ビザをNIMSが手配",
+        "保険": "研究活動保険＋国民健康保険（加入必須）",
+        "研修費・施設利用料": "不徴収",
+        "サポート": "英語での技術・事務・生活支援"
       },
       "duration": {
         "標準": "6〜12ヶ月（複数回に分割可能、事前調整要）"
@@ -698,35 +659,36 @@
         "定員": "各大学あたり年間2名"
       },
       "required_documents": [
-        "Application documents (provided to the partner universities before the application period starts)"
+        "申請書（Excel形式）",
+        "成績証明書（公印または署名入り、PDF）"
       ],
       "application_schedule": [
         {
-          "intake": "2026年度",
-          "application_start": "2026年9月",
+          "intake": "2026年度（2026年6月以降開始）",
+          "application_start": "2025年11月頃",
+          "deadline": "2026年1月9日",
+          "document_screening": "2026年1月〜3月中旬（オンライン面接の場合あり）",
+          "result": "2026年3月中旬",
+          "adoption_period": "2026年6月以降（ビザ等の手続き状況に応じて調整）",
+          "note": "大学を通じてNIMS大学院係に提出。NIMS副理事長が選考"
+        },
+        {
+          "intake": "2027年度",
+          "application_start": "2026年9月頃",
+          "deadline": "2027年1月頃",
+          "result": "2027年3月頃",
+          "adoption_period": "2027年6月以降",
           "note": "年1〜3回公募（年度により異なる）"
         }
       ],
       "url": "https://www.nims.go.jp/students/en/international/",
       "related_urls": [
-        {
-          "label": "ICGP制度概要（英語）",
-          "url": "https://www.nims.go.jp/eng/hr-development/ICGP.html"
-        },
-        {
-          "label": "応募手続き",
-          "url": "https://www.nims.go.jp/students/en/application/"
-        },
-        {
-          "label": "協定大学一覧",
-          "url": "https://www.nims.go.jp/eng/research/collaboration/joint-graduate.html"
-        },
-        {
-          "label": "研究者総覧SAMURAI",
-          "url": "https://samurai.nims.go.jp/"
-        }
+        {"label": "ICGP制度概要（英語）", "url": "https://www.nims.go.jp/eng/hr-development/ICGP.html"},
+        {"label": "応募手続き", "url": "https://www.nims.go.jp/students/en/application/"},
+        {"label": "協定大学一覧", "url": "https://www.nims.go.jp/eng/research/collaboration/joint-graduate.html"},
+        {"label": "研究者総覧SAMURAI", "url": "https://samurai.nims.go.jp/"}
       ]
     }
   ],
-  "last_updated": "2026-06-19"
+  "last_updated": "2026-02-26"
 }

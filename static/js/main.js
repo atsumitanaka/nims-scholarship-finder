@@ -41,16 +41,16 @@ document.addEventListener('DOMContentLoaded', function() {
      * 年テキスト + 月セレクトを内部フィルタ値に変換
      *   - 年も月も空: ''
      *   - 年だけ:    'YYYY-any'
-     *   - 月だけ:    ''  (年がない場合は無視)
+     *   - 月だけ:    'any-MM' / 'any-first' / 'any-second'
      *   - 両方:      'YYYY-MM' / 'YYYY-first' / 'YYYY-second'
      */
     function getIntakeFilterValue() {
         const yearRaw = (intakeYearInput.value || '').trim();
         const month = intakeMonthPartSelect.value;
-        if (!/^\d{4}$/.test(yearRaw)) {
-            return month && yearRaw ? '' : '';
-        }
-        if (!month) return `${yearRaw}-any`;
+        const yearValid = /^\d{4}$/.test(yearRaw);
+        if (!yearValid && !month) return '';
+        if (!yearValid && month) return `any-${month}`;
+        if (yearValid && !month) return `${yearRaw}-any`;
         return `${yearRaw}-${month}`;
     }
 
@@ -282,8 +282,8 @@ document.addEventListener('DOMContentLoaded', function() {
      * filterValue は getIntakeFilterValue() の出力形式：
      *   - ''                : フィルターなし
      *   - 'YYYY-any'        : 年だけ指定（月は問わない）
-     *   - 'YYYY-04' / 'YYYY-10'        : 具体月
-     *   - 'YYYY-first' / 'YYYY-second' : 前期/後期
+     *   - 'any-MM'/'any-first'/'any-second' : 月だけ指定（年は問わない）
+     *   - 'YYYY-04'/'YYYY-10' / 'YYYY-first'/'YYYY-second' : 両方指定
      */
     function matchesIntakeFilter(intakeStr, filterValue) {
         if (!filterValue) return true;
@@ -292,8 +292,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const parts = filterValue.split("-");
         if (parts.length !== 2) return true;
 
-        const targetYear = parseInt(parts[0]);
+        const targetYearStr = parts[0];
         const targetType = parts[1];
+        const isAnyYear = targetYearStr === 'any';
+        const targetYear = isAnyYear ? null : parseInt(targetYearStr);
 
         const isAnyMonth = targetType === "any";
         const isFirstHalf = targetType === "first";
@@ -304,11 +306,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // 随時は常に表示
         if (intakeStr.includes('随時')) return true;
 
-        // 年度形式 "2026年度"
+        const matchesYear = (y) => isAnyYear || y === targetYear;
+
+        // 年度形式 "2026年度"（月不明）
         const fiscalYearMatch = intakeStr.match(/(\d{4})年度/);
-        if (fiscalYearMatch && parseInt(fiscalYearMatch[1]) === targetYear) {
-            // 年度が一致すれば、any / 前期 / 後期 / 具体月いずれもマッチさせる
-            return true;
+        if (fiscalYearMatch && matchesYear(parseInt(fiscalYearMatch[1]))) {
+            // 月不明な intake は「年だけ指定」または「両方指定」時にのみ通す
+            // 「月だけ指定」のときは年度表記だけでは月が分からないので通さない
+            if (!isAnyYear) return true;  // 年指定あり → 年度一致で OK
+            // isAnyYear のときはここでは判定保留（後段で月情報を探す）
         }
 
         // 範囲表記 "2026年4月1日〜9月30日開始"
@@ -317,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const periodYear = parseInt(periodMatch[1]);
             const startMonth = parseInt(periodMatch[2]);
             const endMonth = parseInt(periodMatch[3]);
-            if (periodYear === targetYear) {
+            if (matchesYear(periodYear)) {
                 if (isAnyMonth) return true;
                 if (isFirstHalf && startMonth <= 9) return true;
                 if (isSecondHalf && (startMonth >= 10 || endMonth >= 10)) return true;
@@ -341,17 +347,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 year = parseInt(match[1]);
                 month = parseInt(match[2]);
             }
-            if (year !== targetYear) continue;
+            if (!matchesYear(year)) continue;
             if (isAnyMonth) return true;
             if (isSpecificMonth && month === targetMonth) return true;
             if (isFirstHalf && month >= 4 && month <= 9) return true;
             if (isSecondHalf && (month >= 10 || month <= 3)) return true;
         }
 
-        // フォールバック: "YYYY年" だけが書かれている表記（"2027年7月実施"等）も年一致なら拾う
+        // フォールバック: "YYYY年" だけが書かれている表記（"2027年7月実施"等）
         const yearOnlyMatch = intakeStr.match(/(\d{4})年/);
-        if (yearOnlyMatch && parseInt(yearOnlyMatch[1]) === targetYear) {
-            return isAnyMonth || isFirstHalf || isSecondHalf || isSpecificMonth;
+        if (yearOnlyMatch && matchesYear(parseInt(yearOnlyMatch[1]))) {
+            // 月不明 → 年指定ありの時だけ通す（月だけ指定では判定不能）
+            if (!isAnyYear) return true;
         }
 
         return false;
@@ -548,17 +555,20 @@ document.addEventListener('DOMContentLoaded', function() {
         if (parts.length !== 2) return value;
         const year = parts[0];
         const type = parts[1];
+        const isAnyYear = year === 'any';
+        const yearLabel = isAnyYear ? '任意の年' : `${year}年`;
+        const yearLabelForFiscal = isAnyYear ? '任意の年度' : `${year}年度`;
 
         if (type === 'any') {
-            return `${year}年`;
+            return yearLabel;
         } else if (type === 'first') {
-            return `${year}年度前期（4-9月）`;
+            return `${yearLabelForFiscal}前期（4-9月）`;
         } else if (type === 'second') {
-            return `${year}年度後期（10-3月）`;
+            return `${yearLabelForFiscal}後期（10-3月）`;
         } else if (type === '04') {
-            return `${year}年4月`;
+            return `${yearLabel}4月`;
         } else if (type === '10') {
-            return `${year}年10月`;
+            return `${yearLabel}10月`;
         }
         return value;
     }
