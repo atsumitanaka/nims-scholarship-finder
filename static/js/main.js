@@ -287,9 +287,10 @@ document.addEventListener('DOMContentLoaded', function() {
         timelineSection.style.display = 'block';
         if (mainContent) mainContent.classList.add('has-timeline');
 
-        const selectedIntake = getIntakeFilterValue();
-        const events = collectTimelineEvents(selectedIntake);
-        renderTimeline(events, selectedIntake);
+        // タイムラインは選択したスケジュールを無条件で表示する
+        // （検索フィルタは結果一覧の絞り込み専用）
+        const events = collectTimelineEvents();
+        renderTimeline(events);
     }
 
     /**
@@ -384,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * タイムラインイベントを収集
      */
-    function collectTimelineEvents(selectedIntake) {
+    function collectTimelineEvents() {
         const events = [];
 
         // イベントタイプの定義
@@ -410,13 +411,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
 
         selectedSchedules.forEach(({ program, schedule }) => {
-            // 入学希望時期フィルタ（intake / adoption_period / adoption_date のいずれかが一致すれば OK）
-            const intakeOk = !selectedIntake
-                || matchesIntakeFilter(schedule.intake || '', selectedIntake)
-                || matchesIntakeFilter(schedule.adoption_period || '', selectedIntake)
-                || matchesIntakeFilter(schedule.adoption_date || '', selectedIntake);
-            if (!intakeOk) return;
-
             eventTypes.forEach(eventType => {
                 if (schedule[eventType.key]) {
                     events.push({
@@ -471,12 +465,9 @@ document.addEventListener('DOMContentLoaded', function() {
     /**
      * タイムラインを描画
      */
-    function renderTimeline(events, selectedIntake) {
+    function renderTimeline(events) {
         if (events.length === 0) {
-            const message = selectedIntake
-                ? '選択した入学時期に該当するスケジュールがありません。<br>入学希望時期を変更するか、別の制度を選択してください。'
-                : 'スケジュール情報がありません。';
-            timelineContainer.innerHTML = `<p class="no-results">${message}</p>`;
+            timelineContainer.innerHTML = '<p class="no-results">選択したスケジュールに日付情報がありません。</p>';
             return;
         }
 
@@ -500,10 +491,8 @@ document.addEventListener('DOMContentLoaded', function() {
             monthGroups[monthKey].events.push(event);
         });
 
-        // フィルタ情報
-        const filterInfo = selectedIntake
-            ? `<div class="timeline-filter-info">📅 ${formatIntakeMonth(selectedIntake)} 入学向けスケジュール</div>`
-            : '';
+        // 選択件数の表示
+        const filterInfo = `<div class="timeline-filter-info">📅 ${selectedSchedules.size} 件のスケジュールを比較</div>`;
 
         // 凡例
         let html = `
