@@ -54,28 +54,20 @@
 
                 <!-- 入学・採用希望時期 -->
                 <div class="filter-item">
-                    <label for="intake_month">入学・採用時期 / Intake Period</label>
-                    <select id="intake_month">
-                        <option value="">-- 選択してください --</option>
-                        <optgroup label="2025年度 / FY2025">
-                            <option value="2025-04">2025年4月 / April 2025</option>
-                            <option value="2025-10">2025年10月 / October 2025</option>
-                            <option value="2025-first">2025年度前期（4-9月）/ FY2025 1st</option>
-                            <option value="2025-second">2025年度後期（10-3月）/ FY2025 2nd</option>
-                        </optgroup>
-                        <optgroup label="2026年度 / FY2026">
-                            <option value="2026-04">2026年4月 / April 2026</option>
-                            <option value="2026-10">2026年10月 / October 2026</option>
-                            <option value="2026-first">2026年度前期（4-9月）/ FY2026 1st</option>
-                            <option value="2026-second">2026年度後期（10-3月）/ FY2026 2nd</option>
-                        </optgroup>
-                        <optgroup label="2027年度 / FY2027">
-                            <option value="2027-04">2027年4月 / April 2027</option>
-                            <option value="2027-10">2027年10月 / October 2027</option>
-                            <option value="2027-first">2027年度前期（4-9月）/ FY2027 1st</option>
-                            <option value="2027-second">2027年度後期（10-3月）/ FY2027 2nd</option>
-                        </optgroup>
-                    </select>
+                    <label for="intake_year">入学・採用時期 / Intake Period</label>
+                    <div class="intake-fields">
+                        <input type="text" id="intake_year" placeholder="例: 2027"
+                               maxlength="4" inputmode="numeric" pattern="[0-9]{4}"
+                               autocomplete="off">
+                        <span class="intake-sep">年</span>
+                        <select id="intake_month_part">
+                            <option value="">-- 月 / Month --</option>
+                            <option value="04">4月 / April</option>
+                            <option value="10">10月 / October</option>
+                            <option value="first">前期（4-9月）/ 1st half</option>
+                            <option value="second">後期（10-3月）/ 2nd half</option>
+                        </select>
+                    </div>
                 </div>
 
                 <!-- 筑波大学受験 -->

@@ -91,6 +91,41 @@ header .subtitle {
     box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.15);
 }
 
+.intake-fields {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.intake-fields input[type="text"] {
+    width: 90px;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    background: #fff;
+    color: #333;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.intake-fields input[type="text"]:focus {
+    outline: none;
+    border-color: #666;
+    box-shadow: 0 0 0 3px rgba(100, 100, 100, 0.15);
+}
+
+.intake-fields .intake-sep {
+    font-size: 0.95rem;
+    color: #555;
+    flex-shrink: 0;
+}
+
+.intake-fields select {
+    flex: 1;
+    min-width: 0;
+}
+
 .filter-buttons {
     display: flex;
     gap: 12px;
