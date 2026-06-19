@@ -299,10 +299,19 @@ def benefits_list_to_dict(items: list[dict]) -> dict[str, str]:
     return result
 
 
-def should_update_field(new_count: int, existing_count: int, field_name: str, program_id: str) -> bool:
-    """セーフガード: 新しい件数が既存の半分未満なら更新しない（劣化防止）。"""
+def should_update_field(
+    new_count: int,
+    existing_count: int,
+    field_name: str,
+    program_id: str,
+    focus_mode: bool = False,
+) -> bool:
+    """セーフガード: 新しい件数が既存の半分未満なら更新しない（劣化防止）。
+    ただし focus_program 指定の制度は対象を意図的に絞っているので件数減少を許容。"""
     if new_count == 0:
         return False
+    if focus_mode:
+        return True
     if existing_count > 1 and new_count < existing_count / 2:
         print(
             f"  ⚠️ {program_id}: {field_name} の抽出件数が既存より大幅に少ない "
@@ -392,22 +401,23 @@ def main() -> int:
         existing_schedules = program.get("application_schedule", [])
         existing_benefits = program.get("benefits", {})
         existing_docs = program.get("required_documents", [])
+        focus_mode = bool((program.get("focus_program") or "").strip())
 
         program_changed = False
         if (
-            should_update_field(len(new_schedules), len(existing_schedules), "schedules", program["id"])
+            should_update_field(len(new_schedules), len(existing_schedules), "schedules", program["id"], focus_mode)
             and existing_schedules != new_schedules
         ):
             program["application_schedule"] = new_schedules
             program_changed = True
         if (
-            should_update_field(len(new_benefits), len(existing_benefits), "benefits", program["id"])
+            should_update_field(len(new_benefits), len(existing_benefits), "benefits", program["id"], focus_mode)
             and existing_benefits != new_benefits
         ):
             program["benefits"] = new_benefits
             program_changed = True
         if (
-            should_update_field(len(new_docs), len(existing_docs), "required_documents", program["id"])
+            should_update_field(len(new_docs), len(existing_docs), "required_documents", program["id"], focus_mode)
             and existing_docs != new_docs
         ):
             program["required_documents"] = new_docs
