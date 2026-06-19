@@ -7,7 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const nationalitySelect = document.getElementById('nationality');
     const currentEducationSelect = document.getElementById('current_education');
     const desiredPathSelect = document.getElementById('desired_path');
-    const intakeMonthSelect = document.getElementById('intake_month');
+    const intakeYearInput = document.getElementById('intake_year');
+    const intakeMonthPartSelect = document.getElementById('intake_month_part');
     const tsukubaSelect = document.getElementById('tsukuba');
     const searchBtn = document.getElementById('search-btn');
     const resetBtn = document.getElementById('reset-btn');
@@ -33,9 +34,25 @@ document.addEventListener('DOMContentLoaded', function() {
     clearSelectionBtn.addEventListener('click', clearSelection);
 
     // 入学希望時期変更時にタイムラインも更新
-    intakeMonthSelect.addEventListener('change', function() {
-        updateTimeline();
-    });
+    intakeYearInput.addEventListener('input', updateTimeline);
+    intakeMonthPartSelect.addEventListener('change', updateTimeline);
+
+    /**
+     * 年テキスト + 月セレクトを内部フィルタ値に変換
+     *   - 年も月も空: ''
+     *   - 年だけ:    'YYYY-any'
+     *   - 月だけ:    ''  (年がない場合は無視)
+     *   - 両方:      'YYYY-MM' / 'YYYY-first' / 'YYYY-second'
+     */
+    function getIntakeFilterValue() {
+        const yearRaw = (intakeYearInput.value || '').trim();
+        const month = intakeMonthPartSelect.value;
+        if (!/^\d{4}$/.test(yearRaw)) {
+            return month && yearRaw ? '' : '';
+        }
+        if (!month) return `${yearRaw}-any`;
+        return `${yearRaw}-${month}`;
+    }
 
     // 初期表示：全プログラムを表示
     searchPrograms();
@@ -159,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nationality: nationalitySelect.value,
             current_education: currentEducationSelect.value,
             desired_path: desiredPathSelect.value,
-            intake_month: intakeMonthSelect.value,
+            intake_month: getIntakeFilterValue(),
             tsukuba: tsukubaSelect.value
         };
 
@@ -189,7 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
         nationalitySelect.value = '';
         currentEducationSelect.value = '';
         desiredPathSelect.value = '';
-        intakeMonthSelect.value = '';
+        intakeYearInput.value = '';
+        intakeMonthPartSelect.value = '';
         tsukubaSelect.value = '';
         clearSelection();
         searchPrograms();
@@ -254,82 +272,86 @@ document.addEventListener('DOMContentLoaded', function() {
         timelineSection.style.display = 'block';
         if (mainContent) mainContent.classList.add('has-timeline');
 
-        const selectedIntake = intakeMonthSelect.value;
+        const selectedIntake = getIntakeFilterValue();
         const events = collectTimelineEvents(selectedIntake);
         renderTimeline(events, selectedIntake);
     }
 
     /**
-     * 入学時期がフィルターに一致するかチェック
+     * 入学時期がフィルターに一致するかチェック。
+     * filterValue は getIntakeFilterValue() の出力形式：
+     *   - ''                : フィルターなし
+     *   - 'YYYY-any'        : 年だけ指定（月は問わない）
+     *   - 'YYYY-04' / 'YYYY-10'        : 具体月
+     *   - 'YYYY-first' / 'YYYY-second' : 前期/後期
      */
     function matchesIntakeFilter(intakeStr, filterValue) {
-        if (!filterValue) return true;  // フィルターなしは全て表示
+        if (!filterValue) return true;
+        if (!intakeStr) return false;
 
         const parts = filterValue.split("-");
         if (parts.length !== 2) return true;
 
         const targetYear = parseInt(parts[0]);
-        const targetType = parts[1];  // "04", "10", "first", "second"
+        const targetType = parts[1];
 
-        // 前期/後期の判定
-        const isFirstHalf = targetType === "first";  // 4-9月
-        const isSecondHalf = targetType === "second";  // 10-3月
+        const isAnyMonth = targetType === "any";
+        const isFirstHalf = targetType === "first";
+        const isSecondHalf = targetType === "second";
         const isSpecificMonth = targetType === "04" || targetType === "10";
         const targetMonth = isSpecificMonth ? parseInt(targetType) : null;
 
         // 随時は常に表示
         if (intakeStr.includes('随時')) return true;
 
-        // 年度形式 "2026年度" の場合
+        // 年度形式 "2026年度"
         const fiscalYearMatch = intakeStr.match(/(\d{4})年度/);
-        if (fiscalYearMatch) {
-            const fiscalYear = parseInt(fiscalYearMatch[1]);
-            if (fiscalYear === targetYear) {
-                // 前期/後期の場合は年度が一致すればOK
-                if (isFirstHalf || isSecondHalf) return true;
-                // 具体的な月の場合も年度が一致すればOK
-                if (isSpecificMonth) return true;
-            }
+        if (fiscalYearMatch && parseInt(fiscalYearMatch[1]) === targetYear) {
+            // 年度が一致すれば、any / 前期 / 後期 / 具体月いずれもマッチさせる
+            return true;
         }
 
-        // 採用開始時期の範囲チェック "2026年4月1日〜9月30日開始"
-        const periodMatch = intakeStr.match(/(\d{4})年(\d{1,2})月.*?[〜~].*?(\d{1,2})月/);
+        // 範囲表記 "2026年4月1日〜9月30日開始"
+        const periodMatch = intakeStr.match(/(\d{4})年(\d{1,2})月.*?[〜~～].*?(\d{1,2})月/);
         if (periodMatch) {
             const periodYear = parseInt(periodMatch[1]);
             const startMonth = parseInt(periodMatch[2]);
             const endMonth = parseInt(periodMatch[3]);
-
             if (periodYear === targetYear) {
+                if (isAnyMonth) return true;
                 if (isFirstHalf && startMonth <= 9) return true;
                 if (isSecondHalf && (startMonth >= 10 || endMonth >= 10)) return true;
                 if (isSpecificMonth && startMonth <= targetMonth && targetMonth <= endMonth) return true;
             }
         }
 
-        // 入学時期文字列から年月を抽出
+        // "YYYY年M月" / "April YYYY" / "October YYYY"
         const patterns = [
             /(\d{4})年(\d{1,2})月/,
             /(April|October)\s*(\d{4})/,
         ];
-
         for (const pattern of patterns) {
             const match = intakeStr.match(pattern);
-            if (match) {
-                let year, month;
-                if (match[1] === 'April' || match[1] === 'October') {
-                    month = match[1] === 'April' ? 4 : 10;
-                    year = parseInt(match[2]);
-                } else {
-                    year = parseInt(match[1]);
-                    month = parseInt(match[2]);
-                }
-
-                if (year === targetYear) {
-                    if (isSpecificMonth && month === targetMonth) return true;
-                    if (isFirstHalf && month >= 4 && month <= 9) return true;
-                    if (isSecondHalf && (month >= 10 || month <= 3)) return true;
-                }
+            if (!match) continue;
+            let year, month;
+            if (match[1] === 'April' || match[1] === 'October') {
+                month = match[1] === 'April' ? 4 : 10;
+                year = parseInt(match[2]);
+            } else {
+                year = parseInt(match[1]);
+                month = parseInt(match[2]);
             }
+            if (year !== targetYear) continue;
+            if (isAnyMonth) return true;
+            if (isSpecificMonth && month === targetMonth) return true;
+            if (isFirstHalf && month >= 4 && month <= 9) return true;
+            if (isSecondHalf && (month >= 10 || month <= 3)) return true;
+        }
+
+        // フォールバック: "YYYY年" だけが書かれている表記（"2027年7月実施"等）も年一致なら拾う
+        const yearOnlyMatch = intakeStr.match(/(\d{4})年/);
+        if (yearOnlyMatch && parseInt(yearOnlyMatch[1]) === targetYear) {
+            return isAnyMonth || isFirstHalf || isSecondHalf || isSpecificMonth;
         }
 
         return false;
@@ -527,7 +549,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const year = parts[0];
         const type = parts[1];
 
-        if (type === 'first') {
+        if (type === 'any') {
+            return `${year}年`;
+        } else if (type === 'first') {
             return `${year}年度前期（4-9月）`;
         } else if (type === 'second') {
             return `${year}年度後期（10-3月）`;
@@ -553,7 +577,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const selectedIntake = intakeMonthSelect.value;
+        const selectedIntake = getIntakeFilterValue();
         const html = programs.map(program => createProgramCard(program, selectedIntake)).join('');
         resultsContainer.innerHTML = html;
     }
