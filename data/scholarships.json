@@ -557,8 +557,22 @@
       ],
       "application_schedule": [
         {
-          "intake": "2027年4月入学",
-          "note": "国際マテリアルズイノベーション学位プログラム。詳細な出願期間・締切は2026年11月中に公開予定（数理物質科学研究群案内ページ参照）"
+          "intake": "博士前期課程 7月実施（一般入学試験・社会人特別選抜）"
+        },
+        {
+          "intake": "博士前期課程 10月実施（一般入学試験・社会人特別選抜）"
+        },
+        {
+          "intake": "博士後期課程 令和8年(2026年)10月入学 7月実施（一般入学試験・社会人特別選抜）"
+        },
+        {
+          "intake": "博士後期課程 令和9年(2027年)4月入学 7月実施（一般入学試験・社会人特別選抜）"
+        },
+        {
+          "intake": "博士後期課程 令和9年(2027年)4月入学 10月実施（一般入学試験・社会人特別選抜）"
+        },
+        {
+          "intake": "博士後期課程 令和9年(2027年)4月入学・10月入学 10月実施（一般入学試験・社会人特別選抜）"
         }
       ],
       "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/",
@@ -706,8 +720,7 @@
         "定員": "各大学あたり年間2名"
       },
       "required_documents": [
-        "申請書（Excel形式）",
-        "成績証明書（公印または署名入り、PDF）"
+        "Application documents (provided to the partner universities before the application period starts)"
       ],
       "application_schedule": [
         {
