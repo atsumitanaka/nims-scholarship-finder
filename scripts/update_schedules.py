@@ -191,6 +191,7 @@ def extract_program_data(
     html_text: str,
     pdfs: list[tuple[str, bytes]],
     today: str,
+    additional_pages: list[tuple[str, str]] | None = None,
 ) -> dict | None:
     existing_schedule = json.dumps(
         program.get("application_schedule", []), ensure_ascii=False, indent=2
@@ -237,13 +238,20 @@ def extract_program_data(
         "公式ページに他のプログラムの情報が混在している場合、それらは無視してください。"
         if focus_program else ""
     )
+    additional_section = ""
+    if additional_pages:
+        additional_section = "\n\n## 補助参考ページ（公式ページからリンクされている詳細情報源）"
+        for add_url, add_text in additional_pages:
+            additional_section += f"\n\n### {add_url}\n```\n{add_text}\n```"
+
     user_text = (
         f"## 制度名\n{program['name']} ({program.get('organization', '')})\n"
         f"公式URL: {program['url']}{focus_hint}\n\n"
         f"## 既存スケジュール（書式の参考）\n```json\n{existing_schedule}\n```\n\n"
         f"## 既存 benefits（書式の参考）\n```json\n{existing_benefits}\n```\n\n"
         f"## 既存 required_documents（書式の参考）\n```json\n{existing_docs}\n```\n\n"
-        f"## 公式ページ本文（HTML から抽出したテキスト）\n```\n{html_text}\n```\n\n"
+        f"## 公式ページ本文（HTML から抽出したテキスト）\n```\n{html_text}\n```"
+        f"{additional_section}\n\n"
         f"## 添付 PDF リスト\n{pdf_list_text}\n\n"
         "上記すべての情報源から、最新の schedules / benefits / required_documents を漏れなく抽出してください。"
     )
@@ -342,7 +350,27 @@ def main() -> int:
                 pdfs.append((pdf_url, data_bytes))
                 print(f"  📎 pdf: {pdf_url} ({len(data_bytes) / 1024:.0f}KB)")
 
-        result = extract_program_data(client, program, html_text, pdfs, today)
+        # additional_urls: 詳細ページなど補助情報を Gemini への入力に連結
+        additional_pages: list[tuple[str, str]] = []
+        for add_url in (program.get("additional_urls") or []):
+            print(f"  🔗 additional: {add_url}")
+            add_fetched = fetch_html(add_url)
+            if not add_fetched:
+                continue
+            add_text, add_soup = add_fetched
+            additional_pages.append((add_url, add_text))
+            # 補助ページから PDF も収集（重複は除外）
+            for pdf_url in collect_pdf_links(add_soup, add_url):
+                if any(u == pdf_url for u, _ in pdfs):
+                    continue
+                if len(pdfs) >= MAX_PDFS_PER_PROGRAM:
+                    break
+                data_bytes = fetch_pdf_bytes(pdf_url)
+                if data_bytes:
+                    pdfs.append((pdf_url, data_bytes))
+                    print(f"  📎 pdf (additional): {pdf_url} ({len(data_bytes) / 1024:.0f}KB)")
+
+        result = extract_program_data(client, program, html_text, pdfs, today, additional_pages)
         if not result:
             failures += 1
             summary.append(f"❌ {program['id']}: extraction failed")
