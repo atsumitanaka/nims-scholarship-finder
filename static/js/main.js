@@ -19,9 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const timelineContainer = document.getElementById('timeline-container');
     const clearSelectionBtn = document.getElementById('clear-selection-btn');
 
-    // 選択されたプログラムを保持
-    let selectedPrograms = new Map();
+    // 選択されたスケジュールを保持
+    // key: `${programId}::${scheduleIndex}`
+    // value: { program, schedule, scheduleIndex }
+    let selectedSchedules = new Map();
     let allPrograms = [];
+
+    const SCHEDULE_KEY_SEP = '::';
+    const scheduleKey = (programId, idx) => `${programId}${SCHEDULE_KEY_SEP}${idx}`;
 
     // 元データ（アクセスごとに再取得）
     const DATA_URL = 'data/scholarships.json';
@@ -217,41 +222,51 @@ document.addEventListener('DOMContentLoaded', function() {
      * 選択をクリア
      */
     function clearSelection() {
-        selectedPrograms.clear();
-        document.querySelectorAll('.program-card.selected').forEach(card => {
-            card.classList.remove('selected');
+        selectedSchedules.clear();
+        document.querySelectorAll('.schedule-item.selected').forEach(el => {
+            el.classList.remove('selected');
         });
-        document.querySelectorAll('.program-checkbox').forEach(checkbox => {
+        document.querySelectorAll('.schedule-checkbox').forEach(checkbox => {
             checkbox.checked = false;
         });
         updateTimeline();
     }
 
     /**
-     * 選択状態を復元
+     * 選択状態を復元（再描画後に呼ぶ）。
+     * 表示中のチェックボックスを selectedSchedules に合わせて反映。
+     * 既に Map から消えた制度がある場合は selectedSchedules からも除去。
      */
     function restoreSelections() {
-        selectedPrograms.forEach((program, id) => {
-            const checkbox = document.getElementById(`checkbox-${id}`);
-            const card = document.getElementById(`card-${id}`);
-            if (checkbox) checkbox.checked = true;
-            if (card) card.classList.add('selected');
+        const validKeys = new Set();
+        allPrograms.forEach(p => {
+            (p.application_schedule || []).forEach((_, idx) => {
+                validKeys.add(scheduleKey(p.id, idx));
+            });
+        });
+        Array.from(selectedSchedules.keys()).forEach(k => {
+            if (!validKeys.has(k)) selectedSchedules.delete(k);
         });
     }
 
     /**
-     * プログラム選択のトグル
+     * 個別スケジュール選択のトグル
      */
-    function toggleProgramSelection(programId, checkbox) {
+    function toggleScheduleSelection(programId, scheduleIndex, checkbox) {
         const program = allPrograms.find(p => p.id === programId);
-        const card = document.getElementById(`card-${programId}`);
+        if (!program) return;
+        const schedule = (program.application_schedule || [])[scheduleIndex];
+        if (!schedule) return;
+
+        const key = scheduleKey(programId, scheduleIndex);
+        const itemEl = document.getElementById(`schedule-${programId}-${scheduleIndex}`);
 
         if (checkbox.checked) {
-            selectedPrograms.set(programId, program);
-            if (card) card.classList.add('selected');
+            selectedSchedules.set(key, { program, schedule, scheduleIndex });
+            if (itemEl) itemEl.classList.add('selected');
         } else {
-            selectedPrograms.delete(programId);
-            if (card) card.classList.remove('selected');
+            selectedSchedules.delete(key);
+            if (itemEl) itemEl.classList.remove('selected');
         }
 
         updateTimeline();
@@ -263,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateTimeline() {
         const mainContent = document.querySelector('.main-content');
 
-        if (selectedPrograms.size === 0) {
+        if (selectedSchedules.size === 0) {
             timelineSection.style.display = 'none';
             if (mainContent) mainContent.classList.remove('has-timeline');
             return;
@@ -394,30 +409,27 @@ document.addEventListener('DOMContentLoaded', function() {
             { key: 'internship_period', type: 'period', label: 'インターン期間' }
         ];
 
-        selectedPrograms.forEach((program, id) => {
-            const schedules = program.application_schedule || [];
+        selectedSchedules.forEach(({ program, schedule }) => {
+            // 入学希望時期フィルタ（intake / adoption_period / adoption_date のいずれかが一致すれば OK）
+            const intakeOk = !selectedIntake
+                || matchesIntakeFilter(schedule.intake || '', selectedIntake)
+                || matchesIntakeFilter(schedule.adoption_period || '', selectedIntake)
+                || matchesIntakeFilter(schedule.adoption_date || '', selectedIntake);
+            if (!intakeOk) return;
 
-            schedules.forEach(schedule => {
-                // 入学希望時期でフィルタリング
-                if (!matchesIntakeFilter(schedule.intake, selectedIntake)) {
-                    return;
+            eventTypes.forEach(eventType => {
+                if (schedule[eventType.key]) {
+                    events.push({
+                        program: program.name,
+                        programId: program.id,
+                        type: eventType.type,
+                        typeLabel: eventType.label,
+                        date: schedule[eventType.key],
+                        intake: schedule.intake,
+                        note: schedule.note || '',
+                        sortDate: parseDate(schedule[eventType.key])
+                    });
                 }
-
-                // 各イベントタイプをチェック
-                eventTypes.forEach(eventType => {
-                    if (schedule[eventType.key]) {
-                        events.push({
-                            program: program.name,
-                            programId: id,
-                            type: eventType.type,
-                            typeLabel: eventType.label,
-                            date: schedule[eventType.key],
-                            intake: schedule.intake,
-                            note: schedule.note || '',
-                            sortDate: parseDate(schedule[eventType.key])
-                        });
-                    }
-                });
             });
         });
 
@@ -629,27 +641,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const documentsHtml = formatDocuments(program.required_documents);
 
         // 右カラム: スケジュール（選択された入学時期でフィルタリング）
-        const schedulesHtml = formatSchedules(program.application_schedule, selectedIntake);
+        const schedulesHtml = formatSchedules(program, selectedIntake);
 
         // 関連リンク
         const relatedLinks = (program.related_urls || []).map(link =>
             `<a href="${link.url}" target="_blank" rel="noopener" class="program-link program-link-secondary">${link.label}</a>`
         ).join('');
 
-        // チェックボックスの状態
-        const isChecked = selectedPrograms.has(program.id) ? 'checked' : '';
-        const isSelected = selectedPrograms.has(program.id) ? 'selected' : '';
-
         return `
-            <div class="program-card ${isSelected}" id="card-${program.id}">
-                <div class="program-checkbox-wrapper">
-                    <input type="checkbox" class="program-checkbox" id="checkbox-${program.id}"
-                           data-program-id="${program.id}" ${isChecked}
-                           onchange="window.toggleProgramSelection('${program.id}', this)">
-                    <label for="checkbox-${program.id}" class="program-checkbox-label">
-                        スケジュール比較に追加 / Add to timeline
-                    </label>
-                </div>
+            <div class="program-card" id="card-${program.id}">
                 <div class="program-header">
                     <div>
                         <h3 class="program-title">${program.name}</h3>
@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // グローバルに公開（onclick用）
-    window.toggleProgramSelection = toggleProgramSelection;
+    window.toggleScheduleSelection = toggleScheduleSelection;
 
     /**
      * 支援内容フォーマット
@@ -748,19 +748,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     /**
-     * スケジュールフォーマット
+     * スケジュールフォーマット（アコーディオン + チェックボックス）
      */
-    function formatSchedules(schedules, selectedIntake) {
-        if (!schedules || schedules.length === 0) {
+    function formatSchedules(program, selectedIntake) {
+        const schedules = program.application_schedule || [];
+        if (schedules.length === 0) {
             return '<p>スケジュール情報なし</p>';
         }
 
-        // 選択された入学時期でフィルタリング
-        const filteredSchedules = selectedIntake
-            ? schedules.filter(s => scheduleMatchesFilter(s, selectedIntake))
-            : schedules;
+        // 選択された入学時期でフィルタリング（元のインデックスは保持）
+        const indexed = schedules.map((s, idx) => ({ s, idx }));
+        const filtered = selectedIntake
+            ? indexed.filter(({ s }) => scheduleMatchesFilter(s, selectedIntake))
+            : indexed;
 
-        if (filteredSchedules.length === 0) {
+        if (filtered.length === 0) {
             return '<p class="no-schedule-match">選択した時期のスケジュールはありません</p>';
         }
 
@@ -786,9 +788,14 @@ document.addEventListener('DOMContentLoaded', function() {
             { key: 'internship_period', label: '実施期間', highlight: false }
         ];
 
-        return filteredSchedules.map(s => {
-            const details = [];
+        return filtered.map(({ s, idx }) => {
+            const key = scheduleKey(program.id, idx);
+            const isSelected = selectedSchedules.has(key);
+            const checkedAttr = isSelected ? 'checked' : '';
+            const selectedClass = isSelected ? 'selected' : '';
+            const openAttr = isSelected ? 'open' : '';
 
+            const details = [];
             scheduleFields.forEach(field => {
                 if (s[field.key]) {
                     if (field.highlight) {
@@ -798,14 +805,30 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             });
+            const hasDetails = details.length > 0;
+            const detailsBody = hasDetails
+                ? details.join('')
+                : '<div class="schedule-empty">詳細日程未公開</div>';
+
+            const intakeText = s.intake || '(intake 未設定)';
+            const noteHtml = s.note ? `<div class="schedule-note">💡 ${s.note}</div>` : '';
 
             return `
-                <div class="schedule-item">
-                    <div class="schedule-intake">🎓 ${s.intake}</div>
-                    <div class="schedule-details">
-                        ${details.join('')}
-                    </div>
-                    ${s.note ? `<div class="schedule-note">💡 ${s.note}</div>` : ''}
+                <div class="schedule-item ${selectedClass}" id="schedule-${program.id}-${idx}">
+                    <details ${openAttr}>
+                        <summary class="schedule-summary">
+                            <input type="checkbox" class="schedule-checkbox"
+                                   ${checkedAttr}
+                                   onclick="event.stopPropagation()"
+                                   onchange="window.toggleScheduleSelection('${program.id}', ${idx}, this)"
+                                   aria-label="このスケジュールをタイムライン比較に追加">
+                            <span class="schedule-intake">🎓 ${intakeText}</span>
+                        </summary>
+                        <div class="schedule-details">
+                            ${detailsBody}
+                            ${noteHtml}
+                        </div>
+                    </details>
                 </div>
             `;
         }).join('');
