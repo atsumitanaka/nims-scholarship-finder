@@ -465,6 +465,24 @@ footer p {
     color: #777;
 }
 
+.admin-link {
+    margin-top: 12px;
+    font-size: 0.7rem;
+    color: #999;
+}
+
+.admin-link a {
+    color: #999;
+    text-decoration: none;
+    border-bottom: 1px dotted #bbb;
+    padding-bottom: 1px;
+}
+
+.admin-link a:hover {
+    color: #555;
+    border-bottom-color: #888;
+}
+
 /* チェックボックス */
 .program-checkbox-wrapper {
     display: flex;
