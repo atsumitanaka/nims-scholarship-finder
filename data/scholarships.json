@@ -590,7 +590,11 @@
           "url": "https://www.ap-graduate.tsukuba.ac.jp/course/pas/"
         }
       ],
-      "focus_program": "国際マテリアルズイノベーション学位プログラム"
+      "focus_program": "国際マテリアルズイノベーション学位プログラム",
+      "additional_urls": [
+        "https://www.ap-graduate.tsukuba.ac.jp/course/pas/first_all/",
+        "https://www.ap-graduate.tsukuba.ac.jp/course/pas/second_all/"
+      ]
     },
     {
       "id": "nims_icys",
