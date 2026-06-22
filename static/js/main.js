@@ -112,7 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const DEADLINE_KEYS = ['deadline', 'document_deadline', 'university_contact_deadline'];
     const ALL_DATE_KEYS = [
-        'result', 'second_result', 'enrollment_procedure', 'adoption_date',
+        'arrival_date', 'result', 'result_notification', 'second_result',
+        'enrollment_procedure', 'adoption_date',
         'exam_date', 'interview', 'first_result',
         'deadline', 'document_deadline', 'university_contact_deadline',
         'web_registration', 'application_start'
@@ -430,9 +431,11 @@ document.addEventListener('DOMContentLoaded', function() {
             { key: 'first_result', type: 'result', label: '1次結果発表' },
             { key: 'second_result', type: 'result', label: '2次結果発表' },
             { key: 'result', type: 'result', label: '結果発表' },
+            { key: 'result_notification', type: 'result', label: '結果通知予定' },
             { key: 'enrollment_procedure', type: 'procedure', label: '入学手続' },
             { key: 'adoption_date', type: 'adoption', label: '採用日' },
             { key: 'adoption_period', type: 'adoption', label: '採用開始時期' },
+            { key: 'arrival_date', type: 'adoption', label: '来日・採用開始' },
             { key: 'internship_period', type: 'period', label: 'インターン期間' }
         ];
 
@@ -797,9 +800,11 @@ document.addEventListener('DOMContentLoaded', function() {
             { key: 'first_result', label: '1次結果', highlight: false },
             { key: 'second_result', label: '2次結果', highlight: false },
             { key: 'result', label: '結果発表', highlight: false },
+            { key: 'result_notification', label: '結果通知予定', highlight: false },
             { key: 'enrollment_procedure', label: '入学手続', highlight: false },
             { key: 'adoption_date', label: '採用日', highlight: false },
             { key: 'adoption_period', label: '採用開始', highlight: false },
+            { key: 'arrival_date', label: '来日・採用開始', highlight: false },
             { key: 'internship_period', label: '実施期間', highlight: false }
         ];
 

@@ -74,6 +74,8 @@ SCHEDULE_FIELDS = [
     ("adoption_date", "採用日"),
     ("adoption_period", "採用開始時期"),
     ("internship_period", "実施期間（インターン用）"),
+    ("result_notification", "結果通知予定時期（採用・不採用の通知日）"),
+    ("arrival_date", "来日・採用開始時期（採用後の来日または勤務開始日）"),
     ("note", "備考（条件・対象プログラム等）"),
 ]
 

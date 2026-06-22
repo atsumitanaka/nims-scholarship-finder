@@ -834,6 +834,9 @@
           "label": "研究者総覧SAMURAI",
           "url": "https://samurai.nims.go.jp/"
         }
+      ],
+      "additional_urls": [
+        "https://www.nims.go.jp/students/en/application/"
       ]
     }
   ],
