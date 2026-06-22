@@ -23,7 +23,7 @@ import json
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
@@ -191,6 +191,7 @@ def extract_program_data(
     html_text: str,
     pdfs: list[tuple[str, bytes]],
     today: str,
+    one_year_ago: str,
     additional_pages: list[tuple[str, str]] | None = None,
 ) -> dict | None:
     existing_schedule = json.dumps(
@@ -215,7 +216,7 @@ def extract_program_data(
     system_instruction = (
         "あなたは日本の奨学金・大学院・研究員制度の公式募集ページから"
         "最新の制度情報を漏れなく抽出する専門家です。以下を厳守してください:\n"
-        f"1. 今日の日付は {today}。これより前に締切が過ぎたスケジュールは含めない\n"
+        f"1. 今日の日付は {today}。締切が過去でも {one_year_ago} 以降のスケジュールはすべて含める。それより古いものは除く\n"
         "2. HTML 本文・添付 PDF に明示的に記載されている情報のみ抽出する（推測・補完しない）\n"
         "3. 情報源が PDF のみの場合も必ず読み込んで抽出する\n"
         "4. intake は『2027年4月入学』『2026年度 第1次公募』のように"
@@ -330,6 +331,7 @@ def main() -> int:
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
     data = json.loads(DATA_FILE.read_text(encoding="utf-8"))
     today = datetime.now().strftime("%Y-%m-%d")
+    one_year_ago = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
 
     changed = False
     failures = 0

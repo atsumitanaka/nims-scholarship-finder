@@ -110,23 +110,44 @@ document.addEventListener('DOMContentLoaded', function() {
         return d < new Date();
     }
 
-    /**
-     * 締切超過のスケジュールを除外
-     */
-    function filterExpiredSchedules(schedules) {
-        return (schedules || []).filter(s => !isDeadlinePassed(s.deadline || ''));
+    const DEADLINE_KEYS = ['deadline', 'document_deadline', 'university_contact_deadline'];
+    const ALL_DATE_KEYS = [
+        'result', 'second_result', 'enrollment_procedure', 'adoption_date',
+        'exam_date', 'interview', 'first_result',
+        'deadline', 'document_deadline', 'university_contact_deadline',
+        'web_registration', 'application_start'
+    ];
+
+    function getLatestScheduleDate(s) {
+        let latest = null;
+        for (const key of ALL_DATE_KEYS) {
+            if (!s[key]) continue;
+            const d = parseDate(s[key]);
+            if (d.getFullYear() === 9999) continue;
+            if (!latest || d > latest) latest = d;
+        }
+        return latest;
+    }
+
+    function isScheduleExpired(s) {
+        const latest = getLatestScheduleDate(s);
+        return latest ? latest < new Date() : false;
     }
 
     /**
-     * プログラムの最も近い締切日を取得（ソート用）
+     * プログラムの最も近い将来の締切日を取得（ソート用）
      */
     function getNearestDeadline(program) {
         const schedules = program.application_schedule || [];
         if (schedules.length === 0) return FAR_FUTURE;
         let nearest = FAR_FUTURE;
+        const now = new Date();
         for (const s of schedules) {
-            const d = parseDeadline(s.deadline || '');
-            if (d < nearest) nearest = d;
+            for (const key of DEADLINE_KEYS) {
+                if (!s[key]) continue;
+                const d = parseDeadline(s[key]);
+                if (d >= now && d < nearest) nearest = d;
+            }
         }
         return nearest;
     }
@@ -139,17 +160,17 @@ document.addEventListener('DOMContentLoaded', function() {
         const results = [];
 
         for (const original of programs) {
-            const activeSchedules = filterExpiredSchedules(original.application_schedule);
-            if (activeSchedules.length === 0) continue;
+            const allSchedules = original.application_schedule || [];
+            if (allSchedules.length === 0) continue;
 
-            const program = { ...original, application_schedule: activeSchedules };
+            const program = { ...original };
 
             if (nationality && !(program.target_nationality || []).includes(nationality)) continue;
             if (current_education && !(program.current_education || []).includes(current_education)) continue;
             if (desired_path && !(program.desired_path || []).includes(desired_path)) continue;
 
             if (intake_month) {
-                const hasMatch = activeSchedules.some(s => {
+                const hasMatch = allSchedules.some(s => {
                     const intake = s.intake || '';
                     const adoptionPeriod = s.adoption_period || '';
                     const adoptionDate = s.adoption_date || '';
@@ -169,7 +190,12 @@ document.addEventListener('DOMContentLoaded', function() {
             results.push(program);
         }
 
-        results.sort((a, b) => getNearestDeadline(a) - getNearestDeadline(b));
+        results.sort((a, b) => {
+            const aHasActive = (a.application_schedule || []).some(s => !isScheduleExpired(s));
+            const bHasActive = (b.application_schedule || []).some(s => !isScheduleExpired(s));
+            if (aHasActive !== bHasActive) return aHasActive ? -1 : 1;
+            return getNearestDeadline(a) - getNearestDeadline(b);
+        });
         return results;
     }
 
@@ -801,9 +827,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             const intakeText = s.intake || '(intake 未設定)';
             const noteHtml = s.note ? `<div class="schedule-note">💡 ${s.note}</div>` : '';
+            const expired = isScheduleExpired(s);
+            const expiredClass = expired ? ' expired' : '';
+            const expiredBadge = expired ? '<span class="schedule-expired-badge">募集終了</span>' : '';
 
             return `
-                <div class="schedule-item ${selectedClass}" id="schedule-${program.id}-${idx}">
+                <div class="schedule-item ${selectedClass}${expiredClass}" id="schedule-${program.id}-${idx}">
                     <details ${openAttr}>
                         <summary class="schedule-summary">
                             <input type="checkbox" class="schedule-checkbox"
@@ -812,6 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                    onchange="window.toggleScheduleSelection('${program.id}', ${idx}, this)"
                                    aria-label="このスケジュールをタイムライン比較に追加">
                             <span class="schedule-intake">🎓 ${intakeText}</span>
+                            ${expiredBadge}
                         </summary>
                         <div class="schedule-details">
                             ${detailsBody}
