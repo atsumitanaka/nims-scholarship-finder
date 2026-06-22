@@ -82,8 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (deadlineStr.includes('随時')) return FAR_FUTURE;
 
         const patterns = [
-            /(\d{4})年(\d{1,2})月(\d{1,2})日/,
-            /(\d{4})年(\d{1,2})月/,
+            /(\d{4})年[^月\d]*(\d{1,2})月(\d{1,2})日/,
+            /(\d{4})年[^月\d]*(\d{1,2})月/,
             /(\d{4})\/(\d{1,2})\/(\d{1,2})/
         ];
 
@@ -442,10 +442,10 @@ document.addEventListener('DOMContentLoaded', function() {
         // 「随時」などの場合
         if (dateStr.includes('随時')) return new Date(9999, 11, 31);
 
-        // 年月日パターン
+        // 年月日パターン（「令和8年(2026年)6月2日」のような括弧付き形式にも対応）
         const patterns = [
-            /(\d{4})年(\d{1,2})月(\d{1,2})日/,
-            /(\d{4})年(\d{1,2})月/,
+            /(\d{4})年[^月\d]*(\d{1,2})月(\d{1,2})日/,
+            /(\d{4})年[^月\d]*(\d{1,2})月/,
             /(\d{4})\/(\d{1,2})\/(\d{1,2})/
         ];
 
