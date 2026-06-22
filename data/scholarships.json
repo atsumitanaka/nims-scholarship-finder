@@ -26,7 +26,7 @@
       "benefits": {
         "博士前期課程（修士）月額": "約160,000円（月11日勤務）",
         "博士後期課程（博士）月額": "約200,000円（月14日勤務）",
-        "スタート支援金": "30万円（1回のみ、2025年4月入学者より適用）",
+        "スタート支援金": "30万円（1回のみ）",
         "保険": "労災保険加入"
       },
       "duration": {
@@ -41,7 +41,7 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年4月公募",
+          "intake": "2026年度 第1次公募",
           "application_start": "2026年4月1日",
           "deadline": "2026年5月28日",
           "document_screening": "6月中旬",
@@ -53,7 +53,7 @@
           "note": "筑波大学連携大学院向け"
         },
         {
-          "intake": "2026年9月公募",
+          "intake": "2026年度 第2次公募",
           "application_start": "2026年9月1日",
           "deadline": "2026年10月22日",
           "document_screening": "11月下旬",
@@ -64,9 +64,9 @@
           "note": "筑波大学連携大学院向け"
         },
         {
-          "intake": "2026年3月公募（MI）",
-          "application_start": "2026年3月3日",
-          "deadline": "2026年4月14日",
+          "intake": "2027年3月公募（MI）",
+          "application_start": "2027年3月3日",
+          "deadline": "2027年4月14日",
           "document_screening": "4月下旬",
           "interview": "5月中旬",
           "first_result": "5月下旬～6月上旬",
@@ -726,10 +726,10 @@
       ],
       "tsukuba_related": false,
       "benefits": {
-        "生活手当": "NIMS provides living allowance",
-        "宿泊施設": "Accommodation fee in Tsukuba (Ninomiya House)",
-        "ビザ": "Arrangements supported by NIMS",
-        "サポート": "Technical/administrative support in English at NIMS, Daily-life support service"
+        "Financial support": "NIMS provides living allowance and accommodation fee in Tsukuba",
+        "Accommodation": "Ninomiya House",
+        "Visa": "Arrangements supported by NIMS",
+        "Support": "Technical/administrative support in English at NIMS, Daily-life support service"
       },
       "duration": {
         "標準": "6〜12ヶ月（複数回に分割可能、事前調整要）"
@@ -747,7 +747,7 @@
         {
           "intake": "2026年度",
           "application_start": "2026年9月",
-          "note": "年1〜3回公募（年度により異なる）"
+          "note": "Application period is held one to three times a year, depending on the year"
         }
       ],
       "url": "https://www.nims.go.jp/students/en/international/",
@@ -771,5 +771,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-21"
+  "last_updated": "2026-06-22"
 }
