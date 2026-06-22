@@ -240,6 +240,10 @@
           "label": "申請資格・支給経費",
           "url": "https://www.jsps.go.jp/j-pd/pd_oubo.html"
         }
+      ],
+      "additional_urls": [
+        "https://www.jsps.go.jp/j-pd/pd_nittei.html",
+        "https://www.jsps.go.jp/j-pd/pd_sin.html"
       ]
     },
     {
@@ -298,6 +302,10 @@
           "label": "制度概要",
           "url": "https://www.jsps.go.jp/j-pd/pd_gaiyo.html"
         }
+      ],
+      "additional_urls": [
+        "https://www.jsps.go.jp/j-pd/pd_nittei.html",
+        "https://www.jsps.go.jp/j-pd/pd_sin.html"
       ]
     },
     {
@@ -359,6 +367,10 @@
           "label": "制度概要（RPD）",
           "url": "https://www.jsps.go.jp/j-pd/rpd_gaiyo.html"
         }
+      ],
+      "additional_urls": [
+        "https://www.jsps.go.jp/j-pd/pd_nittei.html",
+        "https://www.jsps.go.jp/j-pd/rpd_sin.html"
       ]
     },
     {
@@ -441,6 +453,10 @@
           "label": "申請スケジュール（欧米短期）",
           "url": "https://www.jsps.go.jp/j-fellow/j-oubei-s/boshu.html"
         }
+      ],
+      "additional_urls": [
+        "https://www.jsps.go.jp/j-fellow/j-ippan/boshu.html",
+        "https://www.jsps.go.jp/j-fellow/j-oubei-s/boshu.html"
       ]
     },
     {
