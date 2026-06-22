@@ -458,31 +458,45 @@
       "application_schedule": [
         {
           "intake": "2026年度（一般・第2回）",
-          "deadline": "2026年4月28日（火）17:00"
+          "deadline": "2026年4月28日（火）17:00",
+          "result_notification": "2026年8月上旬頃",
+          "arrival_date": "2026年9月1日～2026年11月30日"
         },
         {
           "intake": "2027年度（一般・第1回）",
-          "deadline": "2026年8月28日（金）17:00"
+          "deadline": "2026年8月28日（金）17:00",
+          "result_notification": "2026年12月下旬頃",
+          "arrival_date": "2027年4月1日～2027年9月30日"
         },
         {
           "intake": "2027年度（一般・第2回）",
-          "deadline": "2027年4月23日（金）17:00"
+          "deadline": "2027年4月23日（金）17:00",
+          "result_notification": "2027年8月上旬頃",
+          "arrival_date": "2027年9月1日～2027年11月30日"
         },
         {
           "intake": "2026年度（欧米短期・第3回）",
-          "deadline": "2026年6月5日（金）17:00"
+          "deadline": "2026年6月5日（金）17:00",
+          "result_notification": "2026年9月下旬頃",
+          "arrival_date": "2026年12月1日～2027年3月31日"
         },
         {
           "intake": "2027年度（欧米短期・第1回）",
-          "deadline": "2026年9月25日（金）17:00"
+          "deadline": "2026年9月25日（金）17:00",
+          "result_notification": "2027年1月上旬頃",
+          "arrival_date": "2027年4月1日～2028年3月31日"
         },
         {
           "intake": "2027年度（欧米短期・第2回）",
-          "deadline": "2027年1月8日（金）17:00"
+          "deadline": "2027年1月8日（金）17:00",
+          "result_notification": "2027年5月中旬頃",
+          "arrival_date": "2027年8月1日～2028年3月31日"
         },
         {
           "intake": "2027年度（欧米短期・第3回）",
-          "deadline": "2027年6月4日（金）17:00"
+          "deadline": "2027年6月4日（金）17:00",
+          "result_notification": "2027年9月下旬頃",
+          "arrival_date": "2027年12月1日～2028年3月31日"
         }
       ],
       "url": "https://www.jsps.go.jp/j-fellow/",
@@ -531,7 +545,8 @@
         "渡日旅費": "支給",
         "帰国旅費": "支給",
         "授業料": "国立大学は不徴収、公立・私立大学は国が負担",
-        "入学料・検定料": "国立大学は不徴収、公立・私立大学は国が負担"
+        "入学料・検定料": "国立大学は不徴収、公立・私立大学は国が負担",
+        "研究旅費": "ヤング・リーダーズ・プログラム留学生に対して支給する場合がある"
       },
       "duration": {
         "修士": "2年間（+予備教育期間）",
@@ -635,9 +650,9 @@
       "application_schedule": [
         {
           "intake": "2027年4月入学 7月実施（一般入学試験・社会人特別選抜）",
-          "web_registration": "令和8年(2026年)5月22日(金)12時～6月1日(月)15時",
-          "document_deadline": "令和8年(2026年)6月2日(火)",
-          "university_contact_deadline": "令和8年(2026年)5月20日(水)",
+          "web_registration": "令和8年(2026年)7月9日(木)12時～7月22日(水)15時",
+          "document_deadline": "令和8年(2026年)7月23日(木)",
+          "university_contact_deadline": "令和8年(2026年)7月3日(金)",
           "exam_date": "令和8年(2026年)7月3日(金)～7月7日(火)",
           "result": "令和8年(2026年)7月21日(火)10時"
         },
@@ -795,7 +810,7 @@
         "Financial support": "NIMS provides living allowance and accommodation fee in Tsukuba",
         "Accommodation": "Ninomiya House",
         "Visa": "Arrangements supported by NIMS",
-        "Support": "Technical/administrative support in English at NIMS, Daily-life support service"
+        "Support": "Technical/administrative support in English at NIMS, Daily-life support service for foreign researchers"
       },
       "duration": {
         "標準": "6〜12ヶ月（複数回に分割可能、事前調整要）"
@@ -813,7 +828,7 @@
         {
           "intake": "2026年度",
           "application_start": "2026年9月",
-          "note": "Application period is held one to three times a year, depending on the year"
+          "note": "The application period is held one to three times a year, depending on the year."
         }
       ],
       "url": "https://www.nims.go.jp/students/en/international/",
