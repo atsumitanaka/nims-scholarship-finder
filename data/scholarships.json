@@ -644,31 +644,27 @@
         "受験・就学承認書（該当者のみ）",
         "国費留学生証明書（該当者のみ）",
         "出願書類等提出明細票",
-        "特定類型自己申告書（Web出願システムで入力）",
-        "外部英語試験スコア票"
+        "特定類型自己申告書（Web出願システムで入力）"
       ],
       "application_schedule": [
         {
           "intake": "2027年4月入学 7月実施（一般入学試験・社会人特別選抜）",
-          "web_registration": "令和8年(2026年)7月9日(木)12時～7月22日(水)15時",
-          "document_deadline": "令和8年(2026年)7月23日(木)",
-          "university_contact_deadline": "令和8年(2026年)7月3日(金)",
+          "web_registration": "令和8年(2026年)5月22日(金)12時～6月1日(月)15時",
+          "document_deadline": "令和8年(2026年)5月22日(金)～6月2日(火)",
           "exam_date": "令和8年(2026年)7月3日(金)～7月7日(火)",
           "result": "令和8年(2026年)7月21日(火)10時"
         },
         {
           "intake": "2027年4月入学 10月実施（一般入学試験・社会人特別選抜）",
           "web_registration": "令和8年(2026年)8月31日(月)12時～9月10日(木)15時",
-          "document_deadline": "令和8年(2026年)9月11日(金)",
-          "university_contact_deadline": "令和8年(2026年)8月25日(火)",
+          "document_deadline": "令和8年(2026年)8月31日(月)～9月11日(金)",
           "exam_date": "令和8年(2026年)10月8日(木)、10月13日(火)～15日(木)",
           "result": "令和8年(2026年)10月30日(金)10時"
         },
         {
           "intake": "2027年10月入学 10月実施（一般入学試験・社会人特別選抜）",
           "web_registration": "令和8年(2026年)8月31日(月)12時～9月10日(木)15時",
-          "document_deadline": "令和8年(2026年)9月11日(金)",
-          "university_contact_deadline": "令和8年(2026年)8月25日(火)",
+          "document_deadline": "令和8年(2026年)8月31日(月)～9月11日(金)",
           "exam_date": "令和8年(2026年)10月8日(木)、10月13日(火)～15日(木)",
           "result": "令和8年(2026年)10月30日(金)10時"
         }
@@ -826,7 +822,7 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年度",
+          "intake": "2026年度 第2次公募",
           "application_start": "2026年9月",
           "note": "The application period is held one to three times a year, depending on the year."
         }
@@ -855,5 +851,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-23"
+  "last_updated": "2026-06-24"
 }
