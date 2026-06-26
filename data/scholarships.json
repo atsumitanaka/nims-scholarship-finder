@@ -49,8 +49,7 @@
           "exam_date": "8月下旬",
           "first_result": "9月中旬",
           "second_result": "2027年2月中旬",
-          "adoption_date": "2027年4月",
-          "note": "筑波大学連携大学院向け"
+          "adoption_date": "2027年4月"
         },
         {
           "intake": "2026年度 第2次公募",
@@ -60,8 +59,7 @@
           "university_recommendation": "11月下旬～12月上旬",
           "exam_date": "2027年1月下旬",
           "first_result": "2027年2月中旬",
-          "adoption_date": "2027年4月または2027年10月",
-          "note": "筑波大学連携大学院向け"
+          "adoption_date": "2027年4月または2027年10月"
         },
         {
           "intake": "2027年3月公募（MI）",
@@ -72,7 +70,7 @@
           "first_result": "5月下旬～6月上旬",
           "second_result": "7月中旬",
           "adoption_date": "2026年10月または2027年4月",
-          "note": "国際マテリアルズイノベーション学位プログラム向け"
+          "note": "2026年10月入学は博士課程のみ対象"
         },
         {
           "intake": "2026年7月公募（MI）",
@@ -82,8 +80,7 @@
           "interview": "8月中下旬",
           "first_result": "8月下旬～9月上旬",
           "second_result": "10月下旬",
-          "adoption_date": "2027年4月または2027年10月",
-          "note": "国際マテリアルズイノベーション学位プログラム向け"
+          "adoption_date": "2027年4月または2027年10月"
         }
       ],
       "url": "https://www.nims.go.jp/hr-development/junior-researcher.html",
@@ -712,8 +709,8 @@
       ],
       "tsukuba_related": false,
       "benefits": {
-        "ICYS PI 研究費": "年間400万円",
-        "ICYS Research Fellow 研究費": "年間200万円",
+        "ICYS PI 研究費": "Annual research funding of 4 million JPY",
+        "ICYS Research Fellow 研究費": "Annual research funding of 2 million JPY",
         "給与": "Competitive salary"
       },
       "duration": {
@@ -724,11 +721,11 @@
         "ポスドク": "博士号取得後10年以内、または着任までに取得見込みの者。国籍不問"
       },
       "required_documents": [
-        "応募書類（Application Form、研究提案含む、MS-Word）",
-        "履歴書（CV、PDF）",
-        "博士学位証明書または取得見込証明書（PDF）",
-        "代表的な論文3編（PDF）",
-        "出版論文のDOIリスト（MS-Excel）"
+        "Application Form",
+        "CV",
+        "Ph.D. degree certificate or certificate of expected completion",
+        "Three representative papers",
+        "List of DOIs for published papers"
       ],
       "application_schedule": [
         {
@@ -855,5 +852,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-25"
+  "last_updated": "2026-06-26"
 }
