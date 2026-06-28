@@ -48,7 +48,7 @@
           "university_recommendation": "7月中旬",
           "exam_date": "8月下旬",
           "first_result": "9月中旬",
-          "second_result": "2027年2月中旬",
+          "second_result": "2027年2月中下旬",
           "adoption_date": "2027年4月"
         },
         {
@@ -66,8 +66,8 @@
           "application_start": "2027年3月3日",
           "deadline": "2027年4月14日",
           "document_screening": "4月下旬",
-          "interview": "5月中旬",
-          "first_result": "5月下旬～6月上旬",
+          "interview": "5月中旬～6月上旬",
+          "first_result": "7月上旬",
           "second_result": "7月中旬",
           "adoption_date": "2026年10月または2027年4月",
           "note": "2026年10月入学は博士課程のみ対象"
@@ -77,8 +77,8 @@
           "application_start": "2026年7月1日",
           "deadline": "2026年7月30日",
           "document_screening": "8月上旬",
-          "interview": "8月中下旬",
-          "first_result": "8月下旬～9月上旬",
+          "interview": "8月下旬～9月上旬",
+          "first_result": "10月上旬～中旬",
           "second_result": "10月下旬",
           "adoption_date": "2027年4月または2027年10月"
         }
@@ -852,5 +852,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-26"
+  "last_updated": "2026-06-28"
 }
