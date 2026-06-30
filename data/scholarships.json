@@ -709,8 +709,8 @@
       ],
       "tsukuba_related": false,
       "benefits": {
-        "ICYS PI 研究費": "Annual research funding of 4 million JPY",
-        "ICYS Research Fellow 研究費": "Annual research funding of 2 million JPY",
+        "ICYS PI 研究費": "Annual research budget of 4 million JPY",
+        "ICYS Research Fellow 研究費": "Annual research budget of 2 million JPY",
         "給与": "Competitive salary"
       },
       "duration": {
@@ -728,24 +728,6 @@
         "List of DOIs for published papers"
       ],
       "application_schedule": [
-        {
-          "intake": "2026年度採用（2025年秋期公募）",
-          "application_start": "2025年9月2日",
-          "deadline": "2025年10月29日必着",
-          "document_screening": "2025年11月頃",
-          "interview": "2025年11月〜12月頃",
-          "result": "2025年12月頃",
-          "adoption_period": "2026年4月1日〜9月1日着任",
-          "note": "書類選考後、面接審査。英語で応募書類作成。icys-recruit@nims.go.jp にメール提出"
-        },
-        {
-          "intake": "2026年度採用（2026年春期公募）",
-          "application_start": "2026年2月頃",
-          "deadline": "2026年3月24日必着",
-          "result": "2026年6月頃",
-          "adoption_period": "2026年10月1日以降着任",
-          "note": "書類選考後、面接審査。テキストモードのメールで提出（HTMLメール不可）"
-        },
         {
           "intake": "2027年度採用（2026年秋期公募）",
           "application_start": "2026年9月頃",
@@ -852,5 +834,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-28"
+  "last_updated": "2026-06-30"
 }
