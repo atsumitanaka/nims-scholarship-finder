@@ -729,19 +729,8 @@
       ],
       "application_schedule": [
         {
-          "intake": "2027年度採用（2026年秋期公募）",
-          "application_start": "2026年9月頃",
-          "deadline": "2026年10月下旬",
-          "result": "2026年12月頃",
-          "adoption_period": "2027年4月1日以降着任",
-          "note": "書類選考後、面接審査"
-        },
-        {
           "intake": "随時採用（米国滞在者向け特別公募）",
-          "application_start": "随時",
-          "deadline": "随時受付",
-          "result": "申請後約2ヶ月",
-          "note": "米国滞在若手研究者向け特別枠、Applications accepted at any time"
+          "note": "ICYS Special Call for Applications from Young Researchers in the U.S. (Applications accepted at any time)"
         }
       ],
       "url": "https://www.nims.go.jp/icys/",
@@ -834,5 +823,5 @@
       ]
     }
   ],
-  "last_updated": "2026-06-30"
+  "last_updated": "2026-07-01"
 }
