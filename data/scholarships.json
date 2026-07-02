@@ -731,6 +731,10 @@
         {
           "intake": "随時採用（米国滞在者向け特別公募）",
           "note": "ICYS Special Call for Applications from Young Researchers in the U.S. (Applications accepted at any time)"
+        },
+        {
+          "intake": "2026年度 特別公募",
+          "note": "Special Call for ICYS Research Fellow Applications"
         }
       ],
       "url": "https://www.nims.go.jp/icys/",
@@ -823,5 +827,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-01"
+  "last_updated": "2026-07-02"
 }
