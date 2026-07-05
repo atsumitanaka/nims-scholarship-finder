@@ -62,9 +62,9 @@
           "adoption_date": "2027年4月または2027年10月"
         },
         {
-          "intake": "2027年3月公募（MI）",
-          "application_start": "2027年3月3日",
-          "deadline": "2027年4月14日",
+          "intake": "2026年度 第3次公募（MI）",
+          "application_start": "2026年3月3日",
+          "deadline": "2026年4月14日",
           "document_screening": "4月下旬",
           "interview": "5月中旬～6月上旬",
           "first_result": "7月上旬",
@@ -826,5 +826,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-03"
+  "last_updated": "2026-07-05"
 }
