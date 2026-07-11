@@ -297,15 +297,7 @@
       ],
       "application_schedule": [
         {
-          "intake": "2027年4月採用（PD）",
-          "application_start": "2026年4月1日",
-          "deadline": "2026年6月3日 17:00",
-          "first_screening": "10月上旬頃までに第一次選考結果開示",
-          "second_screening": "2027年1月上旬頃までに第二次選考結果開示",
-          "adoption_date": "2027年4月1日"
-        },
-        {
-          "intake": "2027年4月採用（DC1・DC2）",
+          "intake": "2027年4月採用（PD・DC1・DC2）",
           "application_start": "2026年4月1日",
           "deadline": "2026年6月3日 17:00",
           "first_screening": "10月上旬頃までに第一次選考結果開示",
@@ -832,5 +824,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-10"
+  "last_updated": "2026-07-11"
 }
