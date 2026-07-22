@@ -707,7 +707,7 @@
       "tsukuba_related": false,
       "benefits": {
         "ICYS PI 研究費": "Annual research budget of 4 million JPY",
-        "ICYS Research Fellow 研究費": "Annual research budget of 2 million JPY",
+        "ICYS RF 研究費": "Annual research budget of 2 million JPY",
         "給与": "Competitive salary"
       },
       "duration": {
@@ -731,7 +731,7 @@
         },
         {
           "intake": "2026年度 特別公募",
-          "note": "Special Call for ICYS Research Fellow Applications"
+          "note": "Special Call for ICYS RF Applications"
         }
       ],
       "url": "https://www.nims.go.jp/icys/",
@@ -824,5 +824,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-21"
+  "last_updated": "2026-07-22"
 }
