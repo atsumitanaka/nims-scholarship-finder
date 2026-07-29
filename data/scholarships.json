@@ -74,13 +74,11 @@
         },
         {
           "intake": "2026年度 第4次公募（MI）",
-          "application_start": "2026年7月1日",
-          "deadline": "2026年7月30日",
-          "document_screening": "8月上旬",
           "interview": "8月下旬～9月上旬",
           "first_result": "10月上旬～中旬",
           "second_result": "10月下旬",
-          "adoption_date": "2027年4月または2027年10月"
+          "adoption_date": "2027年4月または2027年10月",
+          "note": "募集期間：2026年7月1日～7月30日"
         }
       ],
       "url": "https://www.nims.go.jp/hr-development/junior-researcher.html",
@@ -791,7 +789,7 @@
         "定員": "各大学あたり年間2名"
       },
       "required_documents": [
-        "Application documents (provided to the partner universities before the application period starts)"
+        "The application documents and the specific procedure will be provided to the partner universities before the application period starts."
       ],
       "application_schedule": [
         {
@@ -824,5 +822,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-22"
+  "last_updated": "2026-07-29"
 }
