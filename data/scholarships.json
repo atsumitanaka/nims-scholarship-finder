@@ -706,9 +706,9 @@
       ],
       "tsukuba_related": false,
       "benefits": {
-        "ICYS PI 研究費": "Annual research budget of 4 million JPY",
-        "ICYS RF 研究費": "Annual research budget of 2 million JPY",
-        "給与": "Competitive salary"
+        "ICYS PI Annual research budget": "4 million JPY",
+        "ICYS RF Annual research budget": "2 million JPY",
+        "Salary": "Competitive salary"
       },
       "duration": {
         "初期": "3年間",
@@ -726,12 +726,18 @@
       ],
       "application_schedule": [
         {
-          "intake": "随時採用（米国滞在者向け特別公募）",
-          "note": "ICYS Special Call for Applications from Young Researchers in the U.S. (Applications accepted at any time)"
+          "intake": "ICYS Principal Investigator (PI)",
+          "deadline": "September 29",
+          "note": "For early-career researchers who launching original research programs with international impact and aspire to become future leaders."
         },
         {
-          "intake": "2026年度 特別公募",
-          "note": "Special Call for ICYS RF Applications"
+          "intake": "ICYS Research Fellow (RF)",
+          "deadline": "September 29",
+          "note": "For early-career researchers planning and conducting their own research to achieve outstanding results."
+        },
+        {
+          "intake": "Special Call: ICYS Research Fellow for Young Researchers in the U.S.",
+          "note": "Apply Anytime. A special call for young researchers in the U.S. facing difficulties starting or continuing their research."
         }
       ],
       "url": "https://www.nims.go.jp/icys/",
@@ -824,5 +830,5 @@
       ]
     }
   ],
-  "last_updated": "2026-07-30"
+  "last_updated": "2026-08-03"
 }
