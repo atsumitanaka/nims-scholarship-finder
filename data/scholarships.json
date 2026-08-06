@@ -41,7 +41,7 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年度 第1次公募",
+          "intake": "2027年4月入学",
           "application_start": "2026年4月1日",
           "deadline": "2026年5月28日",
           "document_screening": "6月中旬",
@@ -52,7 +52,7 @@
           "adoption_date": "2027年4月"
         },
         {
-          "intake": "2026年度 第2次公募",
+          "intake": "2027年4月または2027年10月入学",
           "application_start": "2026年9月1日",
           "deadline": "2026年10月22日",
           "document_screening": "11月下旬",
@@ -62,9 +62,9 @@
           "adoption_date": "2027年4月または2027年10月"
         },
         {
-          "intake": "2026年度 第3次公募（MI）",
-          "application_start": "2026年3月3日",
-          "deadline": "2026年4月14日",
+          "intake": "2027年4月入学（MI）",
+          "application_start": "2027年3月3日",
+          "deadline": "2027年4月14日",
           "document_screening": "4月下旬",
           "interview": "5月中旬～6月上旬",
           "first_result": "7月上旬",
@@ -73,7 +73,7 @@
           "note": "2026年10月入学は博士課程のみ対象"
         },
         {
-          "intake": "2026年度 第4次公募（MI）",
+          "intake": "2027年4月または2027年10月入学（MI）",
           "application_start": "2026年7月1日",
           "deadline": "2026年7月30日",
           "document_screening": "8月上旬",
@@ -830,5 +830,5 @@
       ]
     }
   ],
-  "last_updated": "2026-08-05"
+  "last_updated": "2026-08-06"
 }
