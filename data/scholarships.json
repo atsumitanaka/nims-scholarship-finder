@@ -796,8 +796,7 @@
       "application_schedule": [
         {
           "intake": "2026年度 第2次公募",
-          "application_start": "2026年9月",
-          "note": "The application period is held one to three times a year, depending on the year."
+          "application_start": "2026年9月"
         }
       ],
       "url": "https://www.nims.go.jp/students/en/international/",
@@ -824,5 +823,5 @@
       ]
     }
   ],
-  "last_updated": "2026-08-15"
+  "last_updated": "2026-08-21"
 }
