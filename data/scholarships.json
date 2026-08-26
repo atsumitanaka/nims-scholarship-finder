@@ -41,7 +41,7 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年度 第1次公募",
+          "intake": "2027年4月入学（A: 2026年4月公募）",
           "application_start": "2026年4月1日",
           "deadline": "2026年5月28日",
           "document_screening": "6月中旬",
@@ -49,7 +49,7 @@
           "note": "NIMSジュニア研究員 書類審査結果発表"
         },
         {
-          "intake": "2026年度 第2次公募",
+          "intake": "2027年4月入学（B: 2026年9月公募）",
           "application_start": "2026年9月1日",
           "deadline": "2026年10月22日",
           "document_screening": "11月下旬",
@@ -57,7 +57,7 @@
           "note": "NIMSジュニア研究員 書類審査結果発表"
         },
         {
-          "intake": "2026年度 第3次公募（MI）",
+          "intake": "2027年4月入学（C: 2026年3月公募 MI）",
           "application_start": "2026年3月3日",
           "deadline": "2026年4月14日",
           "document_screening": "4月下旬",
@@ -67,7 +67,7 @@
           "note": "NIMSジュニア研究員 書類審査結果発表（4月下旬）、最終審査結果発表（7月中旬）"
         },
         {
-          "intake": "2026年度 第4次公募（MI）",
+          "intake": "2027年4月入学（D: 2026年7月公募 MI）",
           "application_start": "2026年7月1日",
           "deadline": "2026年7月30日",
           "document_screening": "8月上旬",
@@ -823,5 +823,5 @@
       ]
     }
   ],
-  "last_updated": "2026-08-25"
+  "last_updated": "2026-08-26"
 }
