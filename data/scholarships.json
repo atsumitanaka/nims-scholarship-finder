@@ -438,12 +438,6 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年度（一般・第2回）",
-          "document_deadline": "2026年4月28日（火）17:00",
-          "result_notification": "2026年8月上旬頃",
-          "arrival_date": "2026年9月1日～2026年11月30日"
-        },
-        {
           "intake": "2027年度（一般・第1回）",
           "document_deadline": "2026年8月28日（金）17:00",
           "result_notification": "2026年12月下旬頃",
@@ -454,18 +448,6 @@
           "document_deadline": "2027年4月23日（金）17:00",
           "result_notification": "2027年8月上旬頃",
           "arrival_date": "2027年9月1日～2027年11月30日"
-        },
-        {
-          "intake": "2026年度（欧米短期・第2回）",
-          "document_deadline": "2026年1月9日（金）17:00",
-          "result_notification": "2026年5月中旬頃",
-          "arrival_date": "2026年8月1日～2027年3月31日"
-        },
-        {
-          "intake": "2026年度（欧米短期・第3回）",
-          "document_deadline": "2026年6月5日（金）17:00",
-          "result_notification": "2026年9月下旬頃",
-          "arrival_date": "2026年12月1日～2027年3月31日"
         },
         {
           "intake": "2027年度（欧米短期・第1回）",
@@ -625,6 +607,7 @@
         "出願者調書",
         "学歴、研究歴、職歴調書",
         "卒業（見込）証明書",
+        "学位取得（見込）証明書",
         "成績証明書",
         "研究歴証明書（該当者のみ）",
         "Summary of Research and Future Research Plans",
@@ -822,5 +805,5 @@
       ]
     }
   ],
-  "last_updated": "2026-09-02"
+  "last_updated": "2026-09-11"
 }
