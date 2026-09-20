@@ -40,14 +40,6 @@
       ],
       "application_schedule": [
         {
-          "intake": "2026年度 第1次公募",
-          "application_start": "2026年4月1日",
-          "deadline": "2026年5月28日",
-          "document_screening": "6月中旬",
-          "first_result": "7月中旬",
-          "note": "NIMSジュニア研究員 書類審査結果発表"
-        },
-        {
           "intake": "2026年度 第2次公募",
           "application_start": "2026年9月1日",
           "deadline": "2026年10月22日",
@@ -805,5 +797,5 @@
       ]
     }
   ],
-  "last_updated": "2026-09-17"
+  "last_updated": "2026-09-20"
 }
