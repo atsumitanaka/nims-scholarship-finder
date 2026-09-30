@@ -710,13 +710,11 @@
       "application_schedule": [
         {
           "intake": "ICYS Principal Investigator (PI)",
-          "deadline": "September 29",
-          "note": "For early-career researchers who launching original research programs with international impact and aspire to become future leaders."
+          "note": "Applications are currently closed as of 2026-09-30."
         },
         {
           "intake": "ICYS Research Fellow (RF)",
-          "deadline": "September 29",
-          "note": "For early-career researchers planning and conducting their own research to achieve outstanding results."
+          "note": "Applications are currently closed as of 2026-09-30."
         },
         {
           "intake": "Special Call: ICYS Research Fellow for Young Researchers in the U.S.",
@@ -812,5 +810,5 @@
       ]
     }
   ],
-  "last_updated": "2026-09-27"
+  "last_updated": "2026-09-30"
 }
