@@ -710,11 +710,11 @@
       "application_schedule": [
         {
           "intake": "ICYS Principal Investigator (PI)",
-          "note": "Applications are currently closed as of 2026-10-01."
+          "note": "Applications are currently closed as of 2026-09-30."
         },
         {
           "intake": "ICYS Research Fellow (RF)",
-          "note": "Applications are currently closed as of 2026-10-01."
+          "note": "Applications are currently closed as of 2026-09-30."
         },
         {
           "intake": "Special Call: ICYS Research Fellow for Young Researchers in the U.S.",
@@ -810,5 +810,5 @@
       ]
     }
   ],
-  "last_updated": "2026-10-01"
+  "last_updated": "2026-10-02"
 }
