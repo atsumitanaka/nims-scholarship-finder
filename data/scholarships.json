@@ -56,13 +56,13 @@
           "note": "NIMSジュニア研究員 書類審査結果発表"
         },
         {
-          "intake": "2026年10月入学または2027年4月入学",
+          "intake": "2027年4月入学",
           "application_start": "2026年3月3日",
           "deadline": "2026年4月14日",
           "document_screening": "4月下旬",
           "interview": "5月中旬",
           "first_result": "5月下旬",
-          "note": "MIプログラム。2026年10月入学は博士課程のみ対象"
+          "note": "MIプログラム"
         },
         {
           "intake": "2027年4月入学または2027年10月入学",
@@ -801,5 +801,5 @@
       ]
     }
   ],
-  "last_updated": "2026-11-03"
+  "last_updated": "2026-11-04"
 }
