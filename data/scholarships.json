@@ -341,7 +341,8 @@
       ],
       "tsukuba_related": false,
       "benefits": {
-        "月額（PD）": "362,000円",
+        "月額（PD・雇用PD）": "362,000円（研究奨励金と同額を下限として受入研究機関より給与支給）",
+        "月額（フェローシップ型PD）": "362,000円（JSPSより直接支給）",
         "月額（DC）": "227,000円（予定）",
         "研究費": "科学研究費助成事業（特別研究員奨励費）に同時応募が可能"
       },
@@ -795,7 +796,7 @@
       "application_schedule": [
         {
           "intake": "2027 ICGP",
-          "note": "The application period is held once a year. Please see the application details for the ICGP partner universities."
+          "note": "The application period is held once a year. Students from partner universities should submit their application documents to the designated professor or office in charge."
         }
       ],
       "url": "https://www.nims.go.jp/students/en/international/",
@@ -822,5 +823,5 @@
       ]
     }
   ],
-  "last_updated": "2026-11-08"
+  "last_updated": "2026-11-15"
 }
